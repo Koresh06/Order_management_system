@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict
 
 
-class Payment(BaseModel):
+class PaymentModel(BaseModel):
     id: int
     oder_id: int
     user_id: int

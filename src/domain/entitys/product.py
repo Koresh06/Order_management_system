@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict
 
 
-class Product(BaseModel):
+class ProductModel(BaseModel):
     id: int
     name: str
     description: str

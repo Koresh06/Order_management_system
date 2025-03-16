@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 
-class Role(BaseModel):
+class RoleModel(BaseModel):
     id: int
     name: str
 

@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict
 
 
-class Order(BaseModel):
+class OrderModel(BaseModel):
     id: int
     user_id: int
     prduct_id: list[int]

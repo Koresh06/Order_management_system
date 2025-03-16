@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, EmailStr
 
 
-class User(BaseModel):
+class UserModel(BaseModel):
     id: int
     username: str
     email: EmailStr

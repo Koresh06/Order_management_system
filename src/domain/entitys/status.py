@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict
 
 
-class Status(BaseModel):
+class StatusModel(BaseModel):
     id: int
     name: str
     created_at: datetime = datetime.now()
