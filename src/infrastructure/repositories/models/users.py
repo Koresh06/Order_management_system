@@ -20,44 +20,46 @@ class User(Base):
     role_id: Mapped[int] = mapped_column(
         Integer,
         ForeignKey("roles.id"),
+        nullable=True,
     )
-    name: Mapped[str] = mapped_column(
+    username: Mapped[str] = mapped_column(
         String(50),
         unique=True,
     )
     email: Mapped[str] = mapped_column(String(120))
-    password: Mapped[str] = mapped_column(String(50))
+    first_name: Mapped[str] = mapped_column(String(50))
+    last_name: Mapped[str] = mapped_column(String(50))
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
         server_default=func.now(),
     )
-    update_at: Mapped[datetime] = mapped_column(
+    updated_at: Mapped[datetime] = mapped_column(
         DateTime,
         server_default=func.now(),
         onupdate=func.now(),
     )
 
-    role_rel: Mapped["Role"] = relationship(
+    roles_rel: Mapped["Role"] = relationship(
         "Role",
         back_populates="users_rel",
     )
     products_rel: Mapped[list["Product"]] = relationship(
         "Product",
-        back_populates="users",
+        back_populates="users_rel",
         cascade="all, delete",
     )
     orders_rel: Mapped[list["Order"]] = relationship(
         "Order",
-        back_populates="user",
+        back_populates="users_rel",
         cascade="all, delete",
     )
     payments_rel: Mapped[list["Payment"]] = relationship(
         "Payment",
-        back_populates="user",
+        back_populates="users_rel",
         cascade="all, delete",
     )
 
     def __repr__(self):
         return super().__repr__(
-            f"User(id={self.id}, name={self.name}, email={self.email}, created_at={self.created_at}, updated_at={self.update_at})"
+            f"User(id={self.id}, name={self.username}, email={self.email}, created_at={self.created_at}, updated_at={self.updated_at})"
         )

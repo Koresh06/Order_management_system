@@ -34,17 +34,18 @@ class Order(Base):
         onupdate=func.now(),
     )
 
-    user_rel: Mapped["User"] = relationship(
+    users_rel: Mapped["User"] = relationship(
         "User",
-        back_populates="orders",
+        back_populates="orders_rel",
     )
-    product_rel: Mapped["OrderProduct"] = relationship(
+    orders_products_rel: Mapped[list["OrderProduct"]] = relationship(
         "OrderProduct",
-        back_populates="order_rel",
+        back_populates="orders_rel",
+        cascade="all, delete",
     )
-    payment_rel: Mapped["Payment"] = relationship(
+    payments_rel: Mapped["Payment"] = relationship(
         "Payment",
-        back_populates="order",
+        back_populates="orders_rel",
         cascade="all, delete",
     )
 

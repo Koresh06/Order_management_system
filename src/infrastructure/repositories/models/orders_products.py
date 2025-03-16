@@ -41,14 +41,14 @@ class OrderProduct(Base):
         onupdate=func.now(),
     )
 
-    order_rel: Mapped["Order"] = relationship(
+    orders_rel: Mapped["Order"] = relationship(
         "Order",
-        back_populates="products_rel",
+        back_populates="orders_products_rel",
     )
-    product_rel: Mapped["Product"] = relationship(
+    products_rel: Mapped["Product"] = relationship(
         "Product",
-        back_populates="orders_rel",
+        back_populates="orders_products_rel",
     )
 
     def __repr__(self) -> str:
-        return f"OrderProduct(id={self.id}, order_id={self.order_id}, product_id={self.product_id})"
+        return f"OrderProduct(id={self.id}, order_id={self.order_id}, product_id={self.product_id}, quantity={self.quantity})"

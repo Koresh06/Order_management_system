@@ -49,13 +49,13 @@ class Payment(Base):
         onupdate=func.now(),
     )
 
-    user_rel: Mapped["User"] = relationship(
+    users_rel: Mapped["User"] = relationship(
         "User",
-        back_populates="payments",
+        back_populates="payments_rel",
     )
-    order_rel: Mapped["Order"] = relationship(
+    orders_rel: Mapped["Order"] = relationship(
         "Order",
-        back_populates="payments",
+        back_populates="payments_rel",
     )
 
     def __repr__(self):
