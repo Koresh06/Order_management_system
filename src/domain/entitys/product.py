@@ -5,6 +5,7 @@ from pydantic import BaseModel, ConfigDict
 
 class ProductModel(BaseModel):
     id: int
+    user_id: int
     name: str
     description: str
     price: float
