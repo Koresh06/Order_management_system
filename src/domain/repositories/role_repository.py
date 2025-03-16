@@ -1,23 +1,23 @@
 from abc import ABC, abstractmethod
 
-from src.domain.entitys.role import Role
+from src.domain.entitys.role import RoleModel
 
 
 class RoleRepositoryABC(ABC):
     @abstractmethod
-    def create(self, role: Role) -> Role:
+    def create(self, role: RoleModel) -> RoleModel:
         pass
 
     @abstractmethod
-    def get_all(self) -> list[Role]:
+    def get_all(self) -> list[RoleModel]:
         pass
 
     @abstractmethod
-    def get_by_id(self, id: int) -> Role:
+    def get_by_id(self, id: int) -> RoleModel:
         pass
 
     @abstractmethod
-    def update(self, role: Role) -> Role:
+    def update(self, role: RoleModel) -> RoleModel:
         pass
 
     @abstractmethod

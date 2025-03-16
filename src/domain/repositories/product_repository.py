@@ -1,23 +1,23 @@
 from abc import ABC, abstractmethod
 
-from src.domain.entitys.product import Product
+from src.domain.entitys.ProductModel import ProductModel
 
 
 class ProductRepositoryABC(ABC):
     @abstractmethod
-    def create(self, product: Product) -> Product:
+    def create(self, product: ProductModel) -> ProductModel:
         pass
 
     @abstractmethod
-    def get_all(self) -> list[Product]:
+    def get_all(self) -> list[ProductModel]:
         pass
 
     @abstractmethod
-    def get_by_id(self, id: int) -> Product:
+    def get_by_id(self, id: int) -> ProductModel:
         pass
 
     @abstractmethod
-    def update(self, product: Product) -> Product:
+    def update(self, product: ProductModel) -> ProductModel:
         pass
 
     @abstractmethod

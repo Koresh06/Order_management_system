@@ -1,19 +1,19 @@
 from abc import ABC, abstractmethod
 
-from src.domain.entitys.order import Order
+from src.domain.entitys.order import OrderModel
 
 
 class OrderRepositoryABC(ABC):
     @abstractmethod
-    def create(self, order: Order) -> Order:
+    def create(self, order: OrderModel) -> OrderModel:
         pass
 
     @abstractmethod
-    def get_all(self) -> list[Order]:
+    def get_all(self) -> list[OrderModel]:
         pass
 
     @abstractmethod
-    def get_by_id(self, id: int) -> Order:
+    def get_by_id(self, id: int) -> OrderModel:
         pass
 
     @abstractmethod
@@ -21,7 +21,7 @@ class OrderRepositoryABC(ABC):
         pass
 
     @abstractmethod
-    def update(self, order: Order) -> Order:
+    def update(self, order: OrderModel) -> OrderModel:
         pass
 
     @abstractmethod
