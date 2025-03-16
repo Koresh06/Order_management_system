@@ -9,7 +9,7 @@ class Order(BaseModel):
     prduct_id: list[int]
     status: str
     total_price: float
-    created_at: datetime
-    updated_at: datetime
+    created_at: datetime = datetime.now()
+    updated_at: datetime = datetime.now()
 
     model_config = ConfigDict(from_attributes=True)

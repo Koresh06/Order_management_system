@@ -6,7 +6,7 @@ from pydantic import BaseModel, ConfigDict
 class Status(BaseModel):
     id: int
     name: str
-    created_at: datetime
-    updated_at: datetime
+    created_at: datetime = datetime.now()
+    updated_at: datetime = datetime.now()
 
     model_config = ConfigDict(from_attributes=True)
