@@ -26,7 +26,7 @@ class Role(Base):
         DateTime,
         server_default=func.now(),
     )
-    update_at: Mapped[datetime] = mapped_column(
+    updated_at: Mapped[datetime] = mapped_column(
         DateTime,
         server_default=func.now(),
         onupdate=func.now(),
@@ -34,7 +34,7 @@ class Role(Base):
 
     users_rel: Mapped[list["User"]] = relationship(
         "User",
-        back_populates="role_rel",
+        back_populates="roles_rel",
         cascade="all, delete-orphan",
     )
 
