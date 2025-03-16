@@ -1,13 +1,13 @@
 from abc import ABC, abstractmethod
-from collections.abc import AsyncGenerator
+from collections.abc import Generator
 
-from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession
+from sqlalchemy import Engine
 from sqlalchemy.orm import sessionmaker
 
 
 class IDatabase(ABC):
     @abstractmethod
-    def get_engine(self) -> AsyncEngine:
+    def get_engine(self) -> Engine:
         pass
 
     @abstractmethod
@@ -15,5 +15,5 @@ class IDatabase(ABC):
         pass
 
     @abstractmethod
-    async def get_session(self) -> AsyncGenerator[AsyncSession, None]:
+    def get_session(self) -> Generator:
         pass
