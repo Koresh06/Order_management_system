@@ -16,7 +16,12 @@ class UsersUseCaseABC(ABC):
         pass
 
     @abstractmethod
-    def update(self, user_update: dict) -> UserModel:
+    def update(
+        self,
+        user: UserModel,
+        user_update: UserModel,
+        partial: bool = False,
+    ) -> UserModel:
         pass
 
     @abstractmethod

@@ -16,8 +16,17 @@ class UsersUseCaseImpl(UsersUseCaseABC):
     def get_by_id(self, id: int) -> UserModel:
         return self._users_service.get_by_id(id)
 
-    def update(self, user_update: dict) -> UserModel:
-        return self._users_service.update(user_update)
+    def update(
+        self,
+        user: UserModel,
+        user_update: UserModel,
+        partial: bool = False,
+    ) -> UserModel:
+        return self._users_service.update(
+            user=user,
+            user_update=user_update,
+            partial=partial,
+        )
 
     def delete(self, id: int) -> None:
         return self._users_service.delete(id)

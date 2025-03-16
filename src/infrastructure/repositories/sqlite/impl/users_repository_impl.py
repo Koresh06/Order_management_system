@@ -30,11 +30,18 @@ class UsersRepositorySQLiteImpl(UserRepositoryABC):
         with self.db_helper.get_session() as session:
             return session.get(User, id)
 
-    def update(self, user: User, user_update: dict) -> User:
+    def update(
+        self,
+        user: User,
+        user_update: dict,
+        partial: bool = False,
+    ) -> User:
         with self.db_helper.get_session() as session:
-            for key, value in user_update.items():
-                setattr(user, key, value)
+            user_from_db = session.get(User, user.id)
+            for key, value in user_update.model_dump(exclude_unset=partial).items():
+                setattr(user_from_db, key, value)
             session.commit()
+            session.refresh(user_from_db)
             return user
 
     def delete(self, id: int) -> None:
