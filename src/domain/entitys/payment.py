@@ -8,7 +8,8 @@ class PaymentModel(BaseModel):
     user_id: int
     order_id: int
     amount: float
-    payment_date: datetime = datetime.now()
     status: bool
+    created_at: datetime
+    updated_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
