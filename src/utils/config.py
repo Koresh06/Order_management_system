@@ -45,7 +45,7 @@ class SQLiteConfig(BaseModel):
 
     @property
     def url(self) -> str:
-        return f"sqlite+aiosqlite:///{self.path}/{self.name}.db"
+        return f"sqlite:///{self.path}/{self.name}.db"
 
 
 class RedisConfig(BaseModel):
