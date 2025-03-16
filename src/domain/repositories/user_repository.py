@@ -17,10 +17,6 @@ class UserRepositoryABC(ABC):
         pass
 
     @abstractmethod
-    def get_by_email(self, email: str) -> UserModel:
-        pass
-
-    @abstractmethod
     def update(self, user) -> UserModel:
         pass
 
