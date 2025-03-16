@@ -39,12 +39,13 @@ class PostgresSQLConfig(BaseModel):
 
 
 class SQLiteConfig(BaseModel):
-    url: str
+    name: str
+    path: str
     echo: bool = False
 
     @property
     def url(self) -> str:
-        return str(self.url)
+        return f"sqlite+aiosqlite:///{self.path}/{self.name}.db"
 
 
 class RedisConfig(BaseModel):
