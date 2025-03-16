@@ -1,9 +1,9 @@
 from datetime import datetime
-from src.domain.repositories.user_repository import UserRepositoryABC
+from src.domain.repositories.base_repository import BaseRepository
 from src.domain.entitys.user import UserModel
 
 
-class UserRepositoryImplMemory(UserRepositoryABC):
+class MemoryUsersRepositoryImpl(BaseRepository):
     def __init__(self):
         self.users = []
         self.counter = 0

@@ -1,26 +1,42 @@
 from dependency_injector import containers, providers
 
+from src.application.services.orders_service import OrdersServiceImpl
+from src.application.use_cases.order_user_case import OrdersUseCaseImpl
 from src.infrastructure.repositories.sqlite.settings.db_helper import SQLiteDatabaseHelper
-from src.infrastructure.repositories.sqlite.impl.users_repository_impl import UsersRepositorySQLiteImpl
-from src.infrastructure.repositories.memory.user_repository_memory_impl import UserRepositoryImplMemory
+from src.infrastructure.repositories.sqlite.sqlite_repository_factory import SQLiteRepositoryFactory
+from src.infrastructure.repositories.memory.memory_repository_factory import MemoryRepositoryFactory
 from src.application.services.users_service import UsersServiceImpl
-from src.application.use_cases.users.use_case import UsersUseCaseImpl
+from src.application.use_cases.users_use_case import UsersUseCaseImpl
 
 
 class Container(containers.DeclarativeContainer):
     config = providers.Configuration()
 
-    dp_halper = providers.Singleton(SQLiteDatabaseHelper)
+    db_helper = providers.Singleton(SQLiteDatabaseHelper)
 
-    users_repository_sqlite = providers.Singleton(
-        UsersRepositorySQLiteImpl,
-        db_helper=dp_halper,
+    sqlite_repository_factory = providers.Singleton(SQLiteRepositoryFactory)
+    memory_repository_factory = providers.Singleton(MemoryRepositoryFactory)
+
+
+    user_repository = providers.Singleton(
+        sqlite_repository_factory().create_user_repository,
+        db_helper=db_helper
+    )
+    order_repository = providers.Singleton(
+        sqlite_repository_factory().create_order_repository,
+        db_helper=db_helper
     )
 
-    users_repository_memory = providers.Singleton(
-        UserRepositoryImplMemory,
+
+    users_service = providers.Factory(
+        UsersServiceImpl,
+        repository=user_repository
+    )
+    order_service = providers.Factory(
+        OrdersServiceImpl,
+        repository=order_repository
     )
 
-    users_service = providers.Factory(UsersServiceImpl, users_repository=users_repository_memory)
 
-    users_use_case = providers.Factory(UsersUseCaseImpl, users_service=users_service)
+    users_use_case = providers.Factory(UsersUseCaseImpl, service=users_service)
+    order_use_case = providers.Factory(OrdersUseCaseImpl, service=order_service)

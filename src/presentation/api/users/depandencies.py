@@ -5,14 +5,14 @@ from fastapi import Path, Depends, HTTPException, status
 
 from src.application.containers.container import Container
 from src.domain.entitys.user import UserModel
-from src.application.use_cases.intarfase.users_use_case import UsersUseCaseABC
+from src.application.use_cases.base_use_case import BaseUseCase
 
 
 @inject
 def user_by_id(
     id: Annotated[int, Path],
     users_use_case: Annotated[
-        UsersUseCaseABC,
+        BaseUseCase,
         Depends(Provide[Container.users_use_case]),
     ],
 ) -> UserModel:

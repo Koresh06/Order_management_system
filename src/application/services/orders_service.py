@@ -1,31 +1,31 @@
 from src.application.services.base_service import BaseService
-from src.domain.entitys.user import UserModel
+from src.domain.entitys.order import OrderModel
 from src.domain.repositories.base_repository import BaseRepository
-from src.presentation.api.users.schemas import UserOutSchema
+from src.presentation.api.orders.schemas import OrderOutSchema
 
 
-class UsersServiceImpl(BaseService):
+class OrdersServiceImpl(BaseService):
     def __init__(self, repository: BaseRepository):
         self._repository = repository
 
-    def create(self, user: UserModel) -> UserOutSchema:
-        return self._repository.create(user)
+    def create(self, order: OrderModel) -> OrderOutSchema:
+        return self._repository.create(order)
 
-    def get_all(self) -> list[UserModel]:
+    def get_all(self) -> list[OrderModel]:
         return self._repository.get_all()
 
-    def get_by_id(self, id: int) -> UserModel:
+    def get_by_id(self, id: int) -> OrderModel:
         return self._repository.get_by_id(id)
 
     def update(
         self,
-        user: UserModel,
-        user_update: UserModel,
+        order: OrderModel,
+        order_update: OrderModel,
         partial: bool = False,
-    ) -> UserModel:
+    ) -> OrderModel:
         return self._repository.update(
-            user=user,
-            user_update=user_update,
+            order=order,
+            order_update=order_update,
             partial=partial,
         )
 

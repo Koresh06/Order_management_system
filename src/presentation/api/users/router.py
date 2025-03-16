@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, status
 from dependency_injector.wiring import inject, Provide
 
 from src.application.containers.container import Container
-from src.application.use_cases.intarfase.users_use_case import UsersUseCaseABC
+from src.application.use_cases.base_use_case import BaseUseCase
 from src.presentation.api.users.schemas import (
     UserCreateSchema,
     UserOutSchema,
@@ -28,7 +28,7 @@ router = APIRouter(
 @inject
 def get_users(
     users_use_case: Annotated[
-        UsersUseCaseABC,
+        BaseUseCase,
         Depends(Provide[Container.users_use_case]),
     ],
 ) -> list[UserOutSchema]:
@@ -45,7 +45,7 @@ def get_users(
 def create_user(
     user_create: UserCreateSchema,
     users_use_case: Annotated[
-        UsersUseCaseABC,
+        BaseUseCase,
         Depends(Provide[Container.users_use_case]),
     ],
 ):
@@ -81,7 +81,7 @@ def replace_user(
         Depends(user_by_id),
     ],
     users_use_case: Annotated[
-        UsersUseCaseABC,
+        BaseUseCase,
         Depends(Provide[Container.users_use_case]),
     ],
 ):
@@ -105,7 +105,7 @@ def modify_user(
         Depends(user_by_id),
     ],
     users_use_case: Annotated[
-        UsersUseCaseABC,
+        BaseUseCase,
         Depends(Provide[Container.users_use_case]),
     ],
 ):
@@ -128,7 +128,7 @@ def delete_user(
         Depends(user_by_id),
     ],
     users_use_case: Annotated[
-        UsersUseCaseABC,    
+        BaseUseCase,    
         Depends(Provide[Container.users_use_case]),
     ],
 ):

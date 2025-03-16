@@ -1,11 +1,11 @@
 from sqlalchemy import select
-from src.domain.repositories.user_repository import UserRepositoryABC
+from src.domain.repositories.base_repository import BaseRepository
 from src.infrastructure.repositories.sqlite.settings.db_helper import SQLiteDatabaseHelper
-from src.infrastructure.repositories.models.users import User
+from src.infrastructure.repositories.models import User
 from src.presentation.api.users.schemas import UserCreateSchema
 
 
-class UsersRepositorySQLiteImpl(UserRepositoryABC):
+class SQLiteUsersRepositoryImpl(BaseRepository):
     def __init__(self, db_helper: SQLiteDatabaseHelper):
         self.db_helper = db_helper
 
@@ -42,7 +42,7 @@ class UsersRepositorySQLiteImpl(UserRepositoryABC):
                 setattr(user_from_db, key, value)
             session.commit()
             session.refresh(user_from_db)
-            return user
+            return user_from_db
 
     def delete(self, id: int) -> None:
         with self.db_helper.get_session() as session:
