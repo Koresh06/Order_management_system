@@ -1,11 +1,12 @@
 """initial tables
 
-Revision ID: 2072b824bfa9
+Revision ID: 701c7191dc17
 Revises:
-Create Date: 2025-03-16 15:47:23.241412
+Create Date: 2025-03-16 17:48:31.945672
 
 """
 
+from typing import Union
 from collections.abc import Sequence
 
 from alembic import op
@@ -13,7 +14,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = "2072b824bfa9"
+revision: str = "701c7191dc17"
 down_revision: str | None = None
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
@@ -33,7 +34,7 @@ def upgrade() -> None:
             nullable=False,
         ),
         sa.Column(
-            "update_at",
+            "updated_at",
             sa.DateTime(),
             server_default=sa.text("(CURRENT_TIMESTAMP)"),
             nullable=False,
@@ -44,10 +45,11 @@ def upgrade() -> None:
     op.create_table(
         "users",
         sa.Column("id", sa.Integer(), autoincrement=True, nullable=False),
-        sa.Column("role_id", sa.Integer(), nullable=False),
-        sa.Column("name", sa.String(length=50), nullable=False),
+        sa.Column("role_id", sa.Integer(), nullable=True),
+        sa.Column("username", sa.String(length=50), nullable=False),
         sa.Column("email", sa.String(length=120), nullable=False),
-        sa.Column("password", sa.String(length=50), nullable=False),
+        sa.Column("first_name", sa.String(length=50), nullable=False),
+        sa.Column("last_name", sa.String(length=50), nullable=False),
         sa.Column(
             "created_at",
             sa.DateTime(),
@@ -55,7 +57,7 @@ def upgrade() -> None:
             nullable=False,
         ),
         sa.Column(
-            "update_at",
+            "updated_at",
             sa.DateTime(),
             server_default=sa.text("(CURRENT_TIMESTAMP)"),
             nullable=False,
@@ -65,7 +67,7 @@ def upgrade() -> None:
             ["roles.id"],
         ),
         sa.PrimaryKeyConstraint("id"),
-        sa.UniqueConstraint("name"),
+        sa.UniqueConstraint("username"),
     )
     op.create_table(
         "orders",
