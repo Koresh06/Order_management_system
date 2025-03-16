@@ -2,35 +2,43 @@ from sqlalchemy import select
 from src.domain.repositories.user_repository import UserRepositoryABC
 from src.infrastructure.repositories.sqlite.settings.db_helper import SQLiteDatabaseHelper
 from src.infrastructure.repositories.models.users import User
+from src.presentation.api.users.schemas import UserCreateSchema
 
 
 class UsersRepositorySQLiteImpl(UserRepositoryABC):
-    def __init__(self, session: SQLiteDatabaseHelper):
-        self.session = session
+    def __init__(self, db_helper: SQLiteDatabaseHelper):
+        self.db_helper = db_helper
 
-    async def create(self, user: User) -> User:
-        async with self.session.get_session() as session:
-            session.add(user)
-            await session.commit()
-            return user
+    def create(self, user: UserCreateSchema) -> User:
+        with self.db_helper.get_session() as session:
+            create_user = User(
+                username=user.username,
+                email=user.email,
+                first_name=user.first_name,
+                last_name=user.last_name,
+            )
+            session.add(create_user)
+            session.commit()
+            session.refresh(create_user)
+            return create_user
 
-    async def get_all(self) -> list[User]:
-        async with self.session.get_session() as session:
-            return await session.scalars(select(User)).all()
+    def get_all(self) -> list[User]:
+        with self.db_helper.get_session() as session:
+            return session.scalars(select(User)).all()
 
-    async def get_by_id(self, id: int) -> User:
-        async with self.session.get_session() as session:
-            return await session.get(User, id)
+    def get_by_id(self, id: int) -> User:
+        with self.db_helper.get_session() as session:
+            return session.get(User, id)
 
-    async def update(self, user: User, user_update: dict) -> User:
-        async with self.session.get_session() as session:
+    def update(self, user: User, user_update: dict) -> User:
+        with self.db_helper.get_session() as session:
             for key, value in user_update.items():
                 setattr(user, key, value)
-            await session.commit()
+            session.commit()
             return user
 
-    async def delete(self, id: int) -> None:
-        async with self.session.get_session() as session:
-            user = await session.get(User, id)
-            await session.delete(user)
-            await session.commit()
+    def delete(self, id: int) -> None:
+        with self.db_helper.get_session() as session:
+            user = session.get(User, id)
+            session.delete(user)
+            session.commit()
