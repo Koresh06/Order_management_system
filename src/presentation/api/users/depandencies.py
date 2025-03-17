@@ -22,5 +22,5 @@ def user_by_id(
 
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
-        detail=f"User {int} not found!",
+        detail=f"User {id} not found!",
     )

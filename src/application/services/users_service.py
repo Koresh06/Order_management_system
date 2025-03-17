@@ -1,14 +1,13 @@
 from src.application.services.base_service import BaseService
 from src.domain.entitys.user import UserModel
 from src.domain.repositories.base_repository import BaseRepository
-from src.presentation.api.users.schemas import UserOutSchema
 
 
 class UsersServiceImpl(BaseService):
     def __init__(self, repository: BaseRepository):
         self._repository = repository
 
-    def create(self, user: UserModel) -> UserOutSchema:
+    def create(self, user: UserModel) -> UserModel:
         return self._repository.create(user)
 
     def get_all(self) -> list[UserModel]:

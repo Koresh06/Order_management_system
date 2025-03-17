@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship, Mapped, mapped_column
 from src.infrastructure.repositories.models import Base
 
 if TYPE_CHECKING:
-    from src.infrastructure.repositories.models import Order, Product, Payment, Role
+    from src.infrastructure.repositories.models import Order, Product, Payment, Role, Cart
 
 
 class User(Base):
@@ -42,6 +42,11 @@ class User(Base):
     roles_rel: Mapped["Role"] = relationship(
         "Role",
         back_populates="users_rel",
+    )
+    cart_rel: Mapped["Cart"] = relationship(
+        "Cart",
+        back_populates="users_rel",
+        cascade="all, delete",
     )
     products_rel: Mapped[list["Product"]] = relationship(
         "Product",
