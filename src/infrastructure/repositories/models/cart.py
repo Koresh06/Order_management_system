@@ -7,7 +7,7 @@ from src.infrastructure.repositories.models import Base
 
 
 if TYPE_CHECKING:
-    from src.infrastructure.repositories.models import Product, User
+    from src.infrastructure.repositories.models import User, CartProduct
 
 
 class Cart(Base):
@@ -21,17 +21,8 @@ class Cart(Base):
     user_id: Mapped[int] = mapped_column(
         Integer,
         ForeignKey("users.id"),
+        unique=True, 
         nullable=False,
-    )
-    product_id: Mapped[int] = mapped_column(
-        Integer,
-        ForeignKey("products.id"),
-        nullable=False,
-    )
-    quantity: Mapped[int] = mapped_column(
-        Integer,
-        default=1,
-        server_default="1",
     )
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
@@ -47,10 +38,11 @@ class Cart(Base):
         "User",
         back_populates="cart_rel",
     )
-    product_rel: Mapped[List["Product"]] = relationship(
-        "Product",
+    cart_products_rel: Mapped[List["CartProduct"]] = relationship(
+        "CartProduct",
         back_populates="cart_rel",
+        cascade="all, delete-orphan",
     )
 
     def __repr__(self) -> str:
-        return f"Cart(id={self.id}, user_id={self.user_id}, product_id={self.product_id}, quantity={self.quantity})"
+        return f"Cart(id={self.id}, user_id={self.user_id})"

@@ -7,9 +7,13 @@ class RepositoryFactory(ABC):
     def create_user_repository(self) -> BaseRepository:
         pass
 
-    # @abstractmethod
-    # def create_product_repository(self) -> BaseRepository:
-    #     pass
+    @abstractmethod
+    def create_cart_repository(self) -> BaseRepository:
+        pass
+
+    @abstractmethod
+    def create_product_repository(self) -> BaseRepository:
+        pass
 
     @abstractmethod
     def create_order_repository(self) -> BaseRepository:
