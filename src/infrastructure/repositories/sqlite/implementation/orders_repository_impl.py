@@ -24,13 +24,11 @@ class SQLiteOrdersRepositoryImpl(BaseRepository):
     def get_all(self) -> list[Order]:
         with self.db_helper.get_session() as session:
             return session.scalars(select(Order)).all()
-        
 
     def get_by_id(self, id: int) -> Order:
         with self.db_helper.get_session() as session:
             return session.get(Order, id)
-        
-        
+
     def update(
         self,
         order: Order,
@@ -50,5 +48,3 @@ class SQLiteOrdersRepositoryImpl(BaseRepository):
             order = session.get(Order, id)
             session.delete(order)
             session.commit()
-        
-    

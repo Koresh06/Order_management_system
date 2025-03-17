@@ -1,14 +1,13 @@
 from src.application.services.base_service import BaseService
 from src.domain.entitys.order import OrderModel
 from src.domain.repositories.base_repository import BaseRepository
-from src.presentation.api.orders.schemas import OrderOutSchema
 
 
 class OrdersServiceImpl(BaseService):
     def __init__(self, repository: BaseRepository):
         self._repository = repository
 
-    def create(self, order: OrderModel) -> OrderOutSchema:
+    def create(self, order: OrderModel) -> OrderModel:
         return self._repository.create(order)
 
     def get_all(self) -> list[OrderModel]:

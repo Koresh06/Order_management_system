@@ -17,7 +17,12 @@ class OrderUpdateSchema(OrderBaseSchema):
     total_price: float | None = None
 
 
+class OrderUpdatePartilSchema(BaseModel):
+    pass
+
+
 class OrderOutSchema(OrderBaseSchema):
     id: int
+    products: list = []
 
     model_config = ConfigDict(from_attributes=True)

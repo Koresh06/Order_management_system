@@ -7,7 +7,7 @@ from src.infrastructure.repositories.models import Base
 
 
 if TYPE_CHECKING:
-    from src.infrastructure.repositories.models import User, Payment, OrderProduct
+    from src.infrastructure.repositories.models import User, Payment
 
 
 class Order(Base):
@@ -37,11 +37,6 @@ class Order(Base):
     users_rel: Mapped["User"] = relationship(
         "User",
         back_populates="orders_rel",
-    )
-    orders_products_rel: Mapped[list["OrderProduct"]] = relationship(
-        "OrderProduct",
-        back_populates="orders_rel",
-        cascade="all, delete",
     )
     payments_rel: Mapped["Payment"] = relationship(
         "Payment",
