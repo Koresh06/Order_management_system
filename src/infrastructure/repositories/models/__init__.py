@@ -15,4 +15,4 @@ from src.infrastructure.repositories.models.orders import Order as Order
 from src.infrastructure.repositories.models.products import Product
 from src.infrastructure.repositories.models.payments import Payment
 from src.infrastructure.repositories.models.roles import Role
-from src.infrastructure.repositories.models.orders_products import OrderProduct
+from src.infrastructure.repositories.models.carts import Cart
