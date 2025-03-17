@@ -1,12 +1,12 @@
 from datetime import datetime
 from typing import TYPE_CHECKING
-from sqlalchemy import DateTime, Integer, String, ForeignKey, Float, func
+from sqlalchemy import DateTime, Integer, String, ForeignKey, Float, func, Text
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 
 from src.infrastructure.repositories.models import Base
 
 if TYPE_CHECKING:
-    from src.infrastructure.repositories.models import User, OrderProduct
+    from src.infrastructure.repositories.models import User, Cart
 
 
 class Product(Base):
@@ -23,6 +23,12 @@ class Product(Base):
     )
     name: Mapped[str] = mapped_column(String(50))
     price: Mapped[float] = mapped_column(Float)
+    description: Mapped[str] = mapped_column(
+        Text,
+        nullable=True,
+        default="",
+        server_default="",
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
         server_default=func.now(),
@@ -37,10 +43,10 @@ class Product(Base):
         "User",
         back_populates="products_rel",
     )
-    orders_products_rel: Mapped[list["OrderProduct"]] = relationship(
-        "OrderProduct",
+    cart_rel: Mapped["Cart"] = relationship(
+        "Cart",
         back_populates="products_rel",
-        cascade="all, delete",
+        cascade="all, delete-orphan",
     )
 
     def __repr__(self):
