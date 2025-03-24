@@ -4,7 +4,7 @@ from dependency_injector.wiring import Provide, inject
 from fastapi import Path, Depends, HTTPException, status
 
 from src.application.containers.container import Container
-from src.domain.entitys.product import ProductModel
+from src.domain.entitys.item import ProductModel
 from src.application.use_cases.base_use_case import BaseUseCase
 
 
