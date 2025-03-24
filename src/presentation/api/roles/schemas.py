@@ -5,16 +5,16 @@ class RoleBaseSchema(BaseModel):
     name: str
 
 
-class RoleCreateSchema(RoleBaseSchema):
-    pass
+class CreateRoleSchema(RoleBaseSchema):
+    ...
 
 
-class RoleUpdateSchema(RoleBaseSchema):
+class UpdateRoleSchema(RoleBaseSchema):
     name: str | None = None
 
 
-class RoleUpdatePartialSchema(RoleUpdateSchema):
-    pass
+class UpdatePartialRoleSchema(UpdateRoleSchema):
+    ...
 
 
 class RoleOutSchema(RoleBaseSchema):

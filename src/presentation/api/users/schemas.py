@@ -1,12 +1,15 @@
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, EmailStr
 
+from src.presentation.api.roles.schemas import RoleOutSchema
+
 
 class UserBaseSchema(BaseModel):
     username: str
+    role_id: int
     email: EmailStr
-    first_name: str
-    last_name: str
+    full_name: str
+    password: str
 
 
 class UserCreateSchema(UserBaseSchema):
@@ -16,8 +19,8 @@ class UserCreateSchema(UserBaseSchema):
 class UserUpdateSchema(UserBaseSchema):
     username: str | None = None
     email: EmailStr | None = None
-    first_name: str | None = None
-    last_name: str | None = None
+    full_name: str | None = None
+    password: str | None = None
 
 
 class UserUpdatePartialSchema(UserUpdateSchema):

@@ -6,5 +6,3 @@ from datetime import datetime
 class RoleModel:
     id: int
     name: str
-    created_at: datetime
-    updated_at: datetime
