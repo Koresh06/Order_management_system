@@ -12,3 +12,7 @@ class UserServiceInterface(ABC):
     @abstractmethod
     def get_all(self) -> list[UserModel]:
         ...
+
+    @abstractmethod
+    def delete(self, id: int) -> bool:
+        ...

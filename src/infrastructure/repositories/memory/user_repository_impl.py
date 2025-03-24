@@ -38,3 +38,11 @@ class UserRepositoryImpl(UserRepositoryInterface):
                 return user
 
         return None
+    
+    def delete(self, id: int) -> None:
+        for user in self.users:
+            if user.id == id:
+                self.users.remove(user)
+                return
+
+        raise Exception("User not found")

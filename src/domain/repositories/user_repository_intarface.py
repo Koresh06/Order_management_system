@@ -14,6 +14,12 @@ class UserRepositoryInterface(ABC):
     def get_all(self) -> list[UserModel]:
         ...
 
+
     @abstractmethod
     def get_by_username(self, username: str) -> UserModel:
+        ...
+
+
+    @abstractmethod
+    def delete(self, id: int) -> None:
         ...

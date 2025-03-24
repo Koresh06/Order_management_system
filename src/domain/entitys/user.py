@@ -1,15 +1,12 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 
-from src.domain.entitys.role import RoleModel
-
 
 
 @dataclass
 class UserModel:
     id: int
     username: str
-    # role: RoleModel
     role_id: int
     email: str
     full_name: str
@@ -25,8 +22,8 @@ class UserModel:
         self.password = new_password
         self.updated_at = datetime.now()
 
-    def check_role(self, role: RoleModel) -> bool:
-        return self.role == role
+    def check_role(self, role_id: int) -> bool:
+        return self.role_id == role_id
 
     def update_email(self, new_email: str) -> None:
         self.email = new_email

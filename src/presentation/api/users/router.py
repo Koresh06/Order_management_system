@@ -1,5 +1,5 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Path, status
 from dependency_injector.wiring import Provide, inject
 
 from src.application.containers.container import Container
@@ -26,13 +26,13 @@ router = APIRouter(
 @inject
 async def create_user(
     user: UserCreateSchema,
-    repo: Annotated[
+    service: Annotated[
         UserServiceInterface,
         Depends(Provide[Container.user_service]),
     ],
 ) -> UserOutSchema:
     try:
-        return repo.create_user(user)
+        return service.create_user(user)
     except Exception as e:
         raise HTTPException(status_code=404, detail=str(e))
 
@@ -40,9 +40,24 @@ async def create_user(
 @router.get("/", response_model=list[UserOutSchema])
 @inject
 async def get_all_users(
-    repo: Annotated[
+    service: Annotated[
         UserServiceInterface,
         Depends(Provide[Container.user_service]),
     ],
 ) -> list[UserOutSchema]:
-    return repo.get_all()
+    return service.get_all()
+
+
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@inject
+async def delete_user(
+    id: Annotated[int, Path],
+    service: Annotated[
+        UserServiceInterface,
+        Depends(Provide[Container.user_service]),
+    ],
+) -> None:
+    try:
+        service.delete(id)
+    except Exception as e:
+        raise HTTPException(status_code=404, detail=str(e))

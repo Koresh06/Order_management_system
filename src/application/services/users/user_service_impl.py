@@ -27,3 +27,6 @@ class UserServiceImpl(UserServiceInterface):
 
     def get_all(self) -> list[UserModel]:
         return self.user_repo.get_all()
+    
+    def delete(self, id: int) -> bool:
+        return self.user_repo.delete(id)

@@ -15,3 +15,4 @@ class RoleRepositoryInterface(ABC):
     @abstractmethod
     def get_by_id(self, id: int) -> RoleModel:
         ...
+
