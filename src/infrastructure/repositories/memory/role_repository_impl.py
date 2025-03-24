@@ -4,7 +4,10 @@ from src.domain.entitys.role import RoleModel
 
 class RoleRepositoryImpl(RoleRepositoryInterface):
     def __init__(self) -> None:
-        self.roles = []
+        self.roles = [
+            RoleModel(id=1, name="admin"),
+            RoleModel(id=2, name="user"),
+        ]
         self.counter = 1
 
     def create(self, role: RoleModel) -> RoleModel:

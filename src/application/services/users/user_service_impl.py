@@ -24,9 +24,11 @@ class UserServiceImpl(UserServiceInterface):
             raise Exception("User already exists")
         return self.user_repo.create(user)
 
-
     def get_all(self) -> list[UserModel]:
         return self.user_repo.get_all()
+    
+    def get_by_id(self, id: int) -> UserModel:
+        return self.user_repo.get_by_id(id)
     
     def delete(self, id: int) -> bool:
         return self.user_repo.delete(id)

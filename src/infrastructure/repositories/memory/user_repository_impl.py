@@ -8,7 +8,28 @@ from src.application.services.users.security import _hash_password
 
 class UserRepositoryImpl(UserRepositoryInterface):
     def __init__(self):
-        self.users = []
+        self.users = [
+            UserModel(
+                id=1,
+                username="admin",
+                role_id=1,
+                email="admin@localhost",
+                full_name="Admin",
+                password=_hash_password("admin"),
+                created_at=datetime.now(),
+                updated_at=datetime.now(),
+            ),
+            UserModel(
+                id=2,
+                username="user",
+                role_id=2,
+                email="user@localhost",
+                full_name="User",
+                password=_hash_password("user"),
+                created_at=datetime.now(),
+                updated_at=datetime.now(),
+            ),
+        ]
         self.counter = 1
 
     def create(self, user: UserModel) -> UserModel:
@@ -35,6 +56,13 @@ class UserRepositoryImpl(UserRepositoryInterface):
     def get_by_username(self, username: str) -> UserModel:
         for user in self.users:
             if user.username == username:
+                return user
+
+        return None
+    
+    def get_by_id(self, id: int) -> UserModel:
+        for user in self.users:
+            if user.id == id:
                 return user
 
         return None
