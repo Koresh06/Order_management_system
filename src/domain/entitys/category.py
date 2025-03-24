@@ -3,8 +3,9 @@ from datetime import datetime
 
 
 @dataclass
-class RoleModel:
+class CategoryModel:
     id: int
     name: str
+    description: str
     created_at: datetime
     updated_at: datetime

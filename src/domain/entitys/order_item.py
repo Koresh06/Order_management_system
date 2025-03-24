@@ -1,13 +1,14 @@
 from dataclasses import dataclass
 from datetime import datetime
 
+from src.domain.entitys.order import OrderModel
+
 
 @dataclass
-class PaymentModel:
+class OrderItemModel:
     id: int
-    user_id: int
     order_id: int
-    amount: float
-    status: bool
+    item_id: int
+    quantity: int
     created_at: datetime
     updated_at: datetime

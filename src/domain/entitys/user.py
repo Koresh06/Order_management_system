@@ -1,15 +1,18 @@
+from dataclasses import dataclass
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict, EmailStr
+from src.domain.entitys.role import RoleModel
 
 
-class UserModel(BaseModel):
+@dataclass
+class UserModel:
     id: int
     username: str
-    email: EmailStr
+    email: str
+    password: str
+    role: RoleModel
     first_name: str
     last_name: str
     created_at: datetime
     updated_at: datetime
 
-    model_config = ConfigDict(from_attributes=True)

@@ -1,15 +1,20 @@
+from dataclasses import dataclass
 from datetime import datetime
+from enum import Enum
 
-from pydantic import BaseModel, ConfigDict
+
+class OrderStatusEnum(Enum):
+    PENDING = "pending"
+    COMPLETED = "completed"
+    SHIPPED = "shipped"
+    CANCELLED = "cancelled"
 
 
-class OrderModel(BaseModel):
+@dataclass
+class OrderModel:
     id: int
     user_id: int
-    prduct_id: list[int]
-    status: str
+    status: OrderStatusEnum
     total_price: float
     created_at: datetime
     updated_at: datetime
-
-    model_config = ConfigDict(from_attributes=True)
