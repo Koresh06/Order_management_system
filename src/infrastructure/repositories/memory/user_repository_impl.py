@@ -16,8 +16,6 @@ class UserRepositoryImpl(UserRepositoryInterface):
                 email="admin@localhost",
                 full_name="Admin",
                 password=_hash_password("admin"),
-                created_at=datetime.now(),
-                updated_at=datetime.now(),
             ),
             UserModel(
                 id=2,
@@ -26,8 +24,6 @@ class UserRepositoryImpl(UserRepositoryInterface):
                 email="user@localhost",
                 full_name="User",
                 password=_hash_password("user"),
-                created_at=datetime.now(),
-                updated_at=datetime.now(),
             ),
         ]
         self.counter = 1

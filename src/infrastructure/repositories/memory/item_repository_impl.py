@@ -16,8 +16,6 @@ class ItemRepositoryImpl(ItemRepositoryInterface):
             name=item.name,
             description=item.description,
             price=item.price,
-            created_at=datetime.now(),
-            updated_at=datetime.now(),
         )
         self.items.append(new_item)
         return new_item
