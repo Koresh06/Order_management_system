@@ -11,8 +11,8 @@ class UserModel:
     email: str
     full_name: str
     password: str
-    created_at: datetime
-    updated_at: datetime
+    created_at: datetime = field(default_factory=datetime.now)
+    updated_at: datetime = field(default_factory=datetime.now)
 
 
     def __str__(self) -> str:
