@@ -12,9 +12,6 @@ from src.presentation.api.users.schemas import (
 )
 
 
-from src.application.services.users.user_service_impl import NotFoundRole
-
-
 router = APIRouter(
     prefix="/users",
     tags=["users"],

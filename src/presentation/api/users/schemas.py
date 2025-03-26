@@ -7,7 +7,7 @@ from src.presentation.api.roles.schemas import RoleOutSchema
 class UserBaseSchema(BaseModel):
     username: str
     role_id: int
-    email: EmailStr
+    email: str
     full_name: str
     password: str
 
@@ -18,7 +18,7 @@ class UserCreateSchema(UserBaseSchema):
 
 class UserUpdateSchema(UserBaseSchema):
     username: str | None = None
-    email: EmailStr | None = None
+    email: str | None = None
     full_name: str | None = None
     password: str | None = None
 
