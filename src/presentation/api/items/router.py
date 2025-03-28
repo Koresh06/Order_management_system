@@ -4,7 +4,7 @@ from dependency_injector.wiring import Provide, inject
 
 from src.application.containers.container import Container
 from src.application.services.items.item_service_interface import ItemServiceInterface
-from src.presentation.api.item.schemas import ItemCreateSchema, ItemOutSchema
+from src.presentation.api.items.schemas import ItemCreateSchema, ItemOutSchema
 
 router = APIRouter(
     prefix="/items",

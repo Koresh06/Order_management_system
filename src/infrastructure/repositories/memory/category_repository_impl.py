@@ -9,6 +9,7 @@ class CategoryRepositoryImpl(CategoryRepositoryInterface):
                 id=1,
                 user_id=1,
                 name="Category 1",
+                description="Description 1",
             )
         ]
         self.counter = 1

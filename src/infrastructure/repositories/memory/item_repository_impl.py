@@ -5,7 +5,24 @@ from src.domain.entitys.item import ItemModel
 
 class ItemRepositoryImpl(ItemRepositoryInterface):
     def __init__(self):
-        self.items = []
+        self.items = [
+            ItemModel(
+                id=1,
+                user_id=1,
+                category_id=1,
+                name="Item 1",
+                description="Description 1",
+                price=10.0,
+            ),
+            ItemModel(
+                id=2,
+                user_id=2,
+                category_id=2,
+                name="Item 2",
+                description="Description 2",
+                price=20.0,
+            )
+        ]
         self.counter = 1
 
     def create(self, item: ItemModel) -> ItemModel:

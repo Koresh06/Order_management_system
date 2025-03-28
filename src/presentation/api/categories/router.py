@@ -4,7 +4,7 @@ from dependency_injector.wiring import Provide, inject
 
 from src.application.containers.container import Container
 from src.application.services.categories.category_service_intarface import CategoryServiceInterface
-from src.presentation.api.category.schemas import (
+from src.presentation.api.categories.schemas import (
     CategoryCreateSchema,
     CategoryOutSchema,
     CategoryUpdatePartialSchema,
