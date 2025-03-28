@@ -4,10 +4,12 @@ from src.infrastructure.repositories.memory.user_repository_impl import UserRepo
 from src.infrastructure.repositories.memory.role_repository_impl import RoleRepositoryImpl
 from src.infrastructure.repositories.memory.item_repository_impl import ItemRepositoryImpl
 from src.infrastructure.repositories.memory.category_repository_impl import CategoryRepositoryImpl
+from src.infrastructure.repositories.memory.cart_item_repository_impl import CartItemRepositoryImpl
 
-from src.application.services.users.user_service_impl import UserServiceImpl
-from src.application.services.items.item_service_impl import ItemServiceImpl
-from src.application.services.categories.category_service_impl import CategoryServiceImpl
+from src.application.services.users.user_service import UserService
+from src.application.services.items.item_service import ItemService
+from src.application.services.categories.category_service import CategoryService
+from src.application.services.cart_item.cart_item_service import CartItemService
 
 
 
@@ -18,21 +20,28 @@ class Container(containers.DeclarativeContainer):
     role_repository = providers.Singleton(RoleRepositoryImpl)
     item_repository = providers.Singleton(ItemRepositoryImpl)
     category_repository = providers.Singleton(CategoryRepositoryImpl)
+    cart_item_repository = providers.Singleton(CartItemRepositoryImpl)
+
 
     user_service = providers.Factory(
-        UserServiceImpl,
+        UserService,
         user_repo=user_repository, 
         role_repo=role_repository   
     )
+    
+    category_service = providers.Factory(
+        CategoryService,
+        category_repo=category_repository,
+        user_repo=user_repository,
+    )
 
     item_service = providers.Factory(
-        ItemServiceImpl,
+        ItemService,
         item_repo=item_repository,
         user_repo=user_repository
     )
-    
-    category_service = providers.Factory(
-        CategoryServiceImpl,
-        category_repo=category_repository,
-        user_repo=user_repository,
+
+    cart_item_service = providers.Factory(
+        CartItemService,
+        cart_item_repo=cart_item_repository,
     )

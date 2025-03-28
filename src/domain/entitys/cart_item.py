@@ -1,13 +1,11 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 
-from src.domain.entitys.order import OrderModel
-
 
 @dataclass
-class OrderItemModel:
+class CartItemModel:
     id: int
-    order_id: int
+    user_id: int
     item_id: int
     quantity: int
     created_at: datetime = field(default_factory=datetime.now)

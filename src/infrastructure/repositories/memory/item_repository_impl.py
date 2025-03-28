@@ -12,7 +12,7 @@ class ItemRepositoryImpl(ItemRepositoryInterface):
         new_item = ItemModel(
             id=self.counter,
             user_id=item.user_id,
-            category_id=1,
+            category_id=item.category_id,
             name=item.name,
             description=item.description,
             price=item.price,

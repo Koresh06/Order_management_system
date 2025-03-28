@@ -8,7 +8,7 @@ from src.domain.entitys.user import UserModel
 from src.application.services.users.exception import NotFoundRole
 
 
-class UserServiceImpl(UserServiceInterface):
+class UserService(UserServiceInterface):
     def __init__(
         self,
         user_repo: UserRepositoryInterface,

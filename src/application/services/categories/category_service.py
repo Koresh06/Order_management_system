@@ -8,7 +8,8 @@ from src.application.services.categories.category_service_intarface import Categ
 class ExistException(Exception):
     pass
 
-class CategoryServiceImpl(CategoryServiceInterface):
+
+class CategoryService(CategoryServiceInterface):
     def __init__(
             self, 
             category_repo: CategoryRepositoryInterface,

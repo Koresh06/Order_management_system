@@ -5,7 +5,7 @@ from src.domain.repositories.item_repository_intarface import ItemRepositoryInte
 from src.domain.entitys.item import ItemModel
 
 
-class ItemServiceImpl(ItemServiceInterface):
+class ItemService(ItemServiceInterface):
 
     def __init__(
         self,
