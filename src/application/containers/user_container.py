@@ -2,7 +2,7 @@ from dependency_injector import containers, providers
 
 from src.application.services.users.user_service import UserService
 from src.application.services.users.security import PasswordHasher
-from src.application.use_cases.user_use_case import GetAllUsersUseCase, RegisterUserUseCase
+from src.application.use_cases.user_use_case import DeleteUserUseCase, GetAllUsersUseCase, RegisterUserUseCase
 from src.infrastructure.external_services.send_email import EmailService
 from src.infrastructure.repositories.memory.user_repository_impl import UserRepositoryImpl
 
@@ -30,5 +30,10 @@ class UserContainer(containers.DeclarativeContainer):
 
     get_all_users_use_case = providers.Factory(
         GetAllUsersUseCase,
+        service=user_service,
+    )
+
+    delete_user_use_case = providers.Factory(
+        DeleteUserUseCase,
         service=user_service,
     )

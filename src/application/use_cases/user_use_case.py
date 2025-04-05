@@ -26,10 +26,23 @@ class GetAllUsersUseCase(UseCaseMultipleEntities):
         service: UserServiceInterface
     ) -> None:
         self.service = service
-        
+
     try:
         def execute(self, limit: int, offset: int) -> list[UserModel]:
             return self.service.get_all(limit, offset)
     except Exception as e:
         raise ErrorHandlingUtils.application_error("Error in GetAllUsersUseCase", e)
     
+
+class DeleteUserUseCase(UseCaseOneEntity):
+    def __init__(
+        self, 
+        service: UserServiceInterface
+    ) -> None:
+        self.service = service
+
+    def execute(self, id: int) -> None:
+        try:
+            return self.service.delete(id)
+        except Exception as e:
+            raise ErrorHandlingUtils.application_error("Error in DeleteUserUseCase", e)

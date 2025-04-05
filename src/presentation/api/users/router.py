@@ -50,16 +50,16 @@ async def get_all_users(
     return use_case.execute(limit, offset)
 
 
-# @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
-# @inject
-# async def delete_user(
-#     id: Annotated[int, Path],
-#     service: Annotated[
-#         UserServiceInterface,
-#         Depends(Provide[Container.user_service]),
-#     ],
-# ) -> None:
-#     try:
-#         service.delete(id)
-#     except Exception as e:
-#         raise HTTPException(status_code=404, detail=str(e))
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+@inject
+async def delete_user(
+    id: Annotated[int, Path],
+    use_case: Annotated[
+        UseCaseOneEntity,
+        Depends(Provide[UserContainer.delete_user_use_case]),
+    ],
+) -> None:
+    try:
+        use_case.execute(id)
+    except Exception as e:
+        raise HTTPException(status_code=404, detail=str(e))
