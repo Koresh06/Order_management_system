@@ -1,5 +1,5 @@
 from src.application.utils.error_handlers_utils import ErrorHandlingUtils
-from src.domain.use_case.intarface import UseCaseOneEntity, UseCaseMultipleEntities
+from src.domain.use_case.intarface import UseCaseOneEntity
 from src.domain.entitys.category import CategoryModel
 from src.domain.services.category.category_service_intarface import CategoryServiceInterface
 

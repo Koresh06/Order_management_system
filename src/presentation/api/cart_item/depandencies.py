@@ -1,7 +1,7 @@
 from typing import Annotated
 from dependency_injector.wiring import Provide, inject
 
-from fastapi import Path, Depends, HTTPException, status
+from fastapi import Path, Depends, HTTPException
 
 from src.domain.services.cart_item.cart_item_service_intarface import CartItemServiceInterface
 from src.application.containers.cart_item_container import CartItemContainer

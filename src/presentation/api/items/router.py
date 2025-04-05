@@ -5,7 +5,6 @@ from dependency_injector.wiring import Provide, inject
 from src.domain.services.user.user_service_interface import UserServiceInterface
 from src.presentation.api.api_error_handling import ApiErrorHandling
 from src.domain.use_case.intarface import UseCaseOneEntity, UseCaseMultipleEntities
-from src.domain.services.item.item_service_interface import ItemServiceInterface
 from src.presentation.api.users.depandencies import user_by_id
 from src.presentation.api.items.schemas import ItemCreateSchema, ItemOutSchema, GetAllByUserSchema
 from src.application.containers.item_container import ItemContainer

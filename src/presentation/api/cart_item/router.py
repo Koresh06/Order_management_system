@@ -1,6 +1,5 @@
 from typing import Annotated
 from fastapi import APIRouter, Depends, Query, status
-from pydantic import Field
 from dependency_injector.wiring import Provide, inject
 
 from src.domain.services.cart_item.cart_item_service_intarface import CartItemServiceInterface
@@ -11,7 +10,6 @@ from src.presentation.api.cart_item.depandencies import cart_by_id
 from src.presentation.api.cart_item.schemas import (
     CartItemOutSchema,
     CartItemCreateSchema,
-    CartItemUpdateSchema,
     CartItemUpdatePartialSchema,
 )
 

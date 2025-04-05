@@ -8,15 +8,6 @@ from alembic import context
 from src.utils.config import settings
 
 from src.infrastructure.repositories.models import Base
-from src.infrastructure.repositories.models import (
-    User,
-    Payment,
-    Product,
-    Order,
-    Cart,
-    Role,
-    CartProduct,
-)  # noqa
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

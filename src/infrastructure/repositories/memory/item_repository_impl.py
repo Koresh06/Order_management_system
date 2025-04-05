@@ -1,4 +1,3 @@
-from datetime import datetime
 from src.domain.repositories.item_repository_intarface import ItemRepositoryInterface
 from src.domain.entitys.item import ItemModel
 

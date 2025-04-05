@@ -1,4 +1,3 @@
-from datetime import datetime
 from src.domain.repositories.user_repository_intarface import UserRepositoryInterface
 from src.domain.entitys.user import UserModel
 

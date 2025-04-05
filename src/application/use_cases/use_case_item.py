@@ -1,4 +1,3 @@
-from src.domain.entitys.cart_item import CartItemModel
 from src.domain.entitys.user import UserModel
 from src.domain.services.item.item_service_interface import ItemServiceInterface
 from src.domain.entitys.item import ItemModel

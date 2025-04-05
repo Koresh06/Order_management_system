@@ -1,5 +1,5 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from dependency_injector.wiring import Provide, inject
 from src.application.containers.user_container import UserContainer
 from src.domain.services.user.user_service_interface import UserServiceInterface
@@ -10,8 +10,6 @@ from src.presentation.api.users.schemas import (
     PaginationQueryParams,
     UserCreateSchema,
     UserOutSchema,
-    UserUpdateSchema,
-    UserUpdatePartialSchema,
 )
 
 router = APIRouter(

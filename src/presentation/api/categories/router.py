@@ -1,8 +1,8 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends, Path, status
+from fastapi import APIRouter, Depends, status
 from dependency_injector.wiring import Provide, inject
 
-from src.domain.use_case.intarface import UseCaseMultipleEntities, UseCaseOneEntity
+from src.domain.use_case.intarface import UseCaseOneEntity
 from src.application.containers.category_container import CategoryContainer
 from src.presentation.api.api_error_handling import ApiErrorHandling
 from src.presentation.api.categories.schemas import CategoryCreateSchema, CategoryOutSchema
