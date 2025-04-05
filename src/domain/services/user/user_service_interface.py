@@ -14,5 +14,9 @@ class UserServiceInterface(ABC):
         ...
 
     @abstractmethod
+    def get_by_id(self, id: int) -> UserModel:
+        ...
+
+    @abstractmethod
     def delete(self, id: int) -> bool:
         ...

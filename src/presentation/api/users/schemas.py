@@ -33,3 +33,17 @@ class UserOutSchema(UserBaseSchema):
     updated_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class PaginationQueryParams(BaseModel):
+    limit: int = Field(
+        default=10,
+        ge=1,
+        le=100,
+        description="Максимум 100 пользователей за раз"
+    )
+    offset: int = Field(
+        default=0,
+        ge=0,
+        description="Смещение от начала списка"
+    )

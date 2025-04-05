@@ -41,8 +41,8 @@ class DeleteUserUseCase(UseCaseOneEntity):
     ) -> None:
         self.service = service
 
-    def execute(self, id: int) -> None:
+    def execute(self, user: UserModel) -> None:
         try:
-            return self.service.delete(id)
+            return self.service.delete(user.id)
         except Exception as e:
             raise ErrorHandlingUtils.application_error("Error in DeleteUserUseCase", e)

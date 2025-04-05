@@ -1,25 +1,37 @@
+from fastapi import Path, Depends, HTTPException, status
 from typing import Annotated
 from dependency_injector.wiring import Provide, inject
 
-from fastapi import Path, Depends, HTTPException, status
-
-# from src.application.containers.container import Container
+from src.application.containers.user_container import UserContainer
+from src.domain.services.user.user_service_interface import UserServiceInterface
 from src.domain.entitys.user import UserModel
 
 
-# @inject
-# def user_by_id(
-#     id: Annotated[int, Path],
-#     users_use_case: Annotated[
-#         BaseUseCase,
-#         Depends(Provide[Container.users_use_case]),
-#     ],
-# ) -> UserModel:
-#     user = users_use_case.get_by_id(id)
-#     if user is not None:
-#         return user
+@inject
+def user_by_id(
+    user_id: Annotated[
+        int,
+        Path(
+            title="User ID",
+            description="Идентификатор для получения пользователя",
+            ge=1,
+        )
+    ],
+    service: Annotated[
+        UserServiceInterface,
+        Depends(Provide[UserContainer.user_service])
+    ],
+) -> UserModel:
+    """
+    Получить пользователя по ID. Используется как зависимость.
 
-#     raise HTTPException(
-#         status_code=status.HTTP_404_NOT_FOUND,
-#         detail=f"User {id} not found!",
-#     )
+    - **user_id**: ID пользователя
+    """
+    user = service.get_by_id(user_id)
+    if user is not None:
+        return user
+
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail=f"Пользователь с ID {user_id} не найден.",
+    )
