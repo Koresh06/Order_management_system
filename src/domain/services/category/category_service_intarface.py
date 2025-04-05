@@ -12,11 +12,3 @@ class CategoryServiceInterface(ABC):
     @abstractmethod
     def get_all(self) -> list[CategoryModel]:
         ...
-
-    @abstractmethod
-    def get_by_id(self, id: int) -> CategoryModel:
-        ...
-
-    @abstractmethod
-    def get_by_name(self, name: str) -> CategoryModel:
-        ...
