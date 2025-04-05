@@ -14,7 +14,6 @@ class UserRepositoryInterface(ABC):
     def get_all(self, limit: int, offset: int) -> list[UserModel]:
         ...
 
-
     @abstractmethod
     def get_by_username(self, username: str) -> UserModel:
         ...

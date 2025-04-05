@@ -1,6 +1,8 @@
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict  
 
+from src.presentation.api.users.schemas import UserOutSchema
+
 
 class ItemBaseSchema(BaseModel):
     user_id: int
@@ -30,5 +32,12 @@ class ItemOutSchema(ItemBaseSchema):
     id: int
     created_at: datetime
     updated_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class GetAllByUserSchema(BaseModel):
+    user: UserOutSchema  
+    items: list[ItemOutSchema]
 
     model_config = ConfigDict(from_attributes=True)

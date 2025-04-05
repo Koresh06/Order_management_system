@@ -26,7 +26,7 @@ router = APIRouter(
     status_code=status.HTTP_201_CREATED,
 )
 @inject
-async def create_category(
+def create_category(
     category: CategoryCreateSchema,
     use_case: Annotated[
         UseCaseOneEntity,
@@ -45,7 +45,7 @@ async def create_category(
 #     status_code=status.HTTP_200_OK,
 # )
 # @inject
-# async def get_all_categories(
+# def get_all_categories(
 #     service: Annotated[
 #         CategoryServiceInterface,
 #         Depends(Provide[Container.category_service]),

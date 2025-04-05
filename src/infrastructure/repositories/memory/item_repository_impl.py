@@ -40,7 +40,13 @@ class ItemRepositoryImpl(ItemRepositoryInterface):
     def get_all(self) -> list[ItemModel]:
         return self.items
     
-    def get_all_by_user(self, id: int) -> list[ItemModel]:
+    def get_by_name(self, name: str) -> ItemModel:
+        for item in self.items:
+            if item.name == name:
+                return item
+        return None
+    
+    def get_items_by_user(self, id: int) -> list[ItemModel]:
         user_items = []
         for item in self.items:
             if item.user_id == id:

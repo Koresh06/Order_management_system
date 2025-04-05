@@ -13,5 +13,9 @@ class ItemRepositoryInterface(ABC):
         ...
 
     @abstractmethod
-    def get_all_by_user(self, id: int) -> ItemModel:
+    def get_by_name(self, name: str) -> ItemModel:
+        ...
+
+    @abstractmethod
+    def get_items_by_user(self, id: int) -> ItemModel:
         ...

@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from src.application.containers.user_container import UserContainer
 from src.application.containers.category_container import CategoryContainer
+from src.application.containers.item_container import ItemContainer
 
 from src.presentation.api.users.router import router as users_router
 from src.presentation.api.items.router import router as item_router
@@ -16,6 +17,9 @@ def create_app() -> FastAPI:
 
     category_container = CategoryContainer()
     category_container.wire(modules=["src.presentation.api.categories.router"])
+
+    item_container = ItemContainer()
+    item_container.wire(modules=["src.presentation.api.items.router"])
 
     app = FastAPI(
         title="API",

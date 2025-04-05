@@ -14,5 +14,5 @@ class ItemServiceInterface(ABC):
         ...
 
     @abstractmethod
-    def get_all_by_user(self, id: int) -> list[ItemModel]:
+    def get_all_items_by_user(self, id: int) -> list[ItemModel]:
         ...
