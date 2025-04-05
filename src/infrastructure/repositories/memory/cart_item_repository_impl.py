@@ -18,20 +18,22 @@ class CartItemRepositoryImpl(CartItemRepositoryInterface):
         self.counter += 1
         return new_cart_item
 
-    def get_all(self) -> list[CartItemModel]:
-        return self.cart_items
+    def get_item_in_cart(self, cart_id: int, item_id: int) -> CartItemModel:
+        for cart_item in self.cart_items:
+            if cart_item.user_id == cart_id and cart_item.item_id == item_id:
+                return cart_item
 
-    def get_by_cart(self, cart_id: int) -> CartItemModel:
+    def get_items_cart_user(self, user_id: int) -> list[CartItemModel]:
+        cart_items = []
+        for cart_item in self.cart_items:
+            if cart_item.user_id == user_id:
+                cart_items.append(cart_item)
+        return cart_items
+    
+    def get_by_id(self, cart_id: int) -> CartItemModel:
         for cart_item in self.cart_items:
             if cart_item.id == cart_id:
                 return cart_item
-        return None
-
-    def get_cart_item(self, user_id: int, item_id: int) -> CartItemModel:
-        for cart_item in self.cart_items:
-            if cart_item.user_id == user_id and cart_item.item_id == item_id:
-                return cart_item
-        return None
 
     def update_cart_item(
         self,

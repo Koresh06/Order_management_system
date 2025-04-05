@@ -40,6 +40,12 @@ class ItemRepositoryImpl(ItemRepositoryInterface):
     def get_all(self) -> list[ItemModel]:
         return self.items
     
+    def get_by_id(self, id: int) -> ItemModel:
+        for item in self.items:
+            if item.id == id:
+                return item
+        return None
+    
     def get_by_name(self, name: str) -> ItemModel:
         for item in self.items:
             if item.name == name:

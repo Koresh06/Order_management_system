@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict, Field
 class CartItemBaseSchema(BaseModel):
     user_id: int
     item_id: int
-    quantity: int
+    quantity: int = Field(default=1, ge=1, le=100)
 
 
 class CartItemCreateSchema(CartItemBaseSchema):

@@ -13,6 +13,10 @@ class ItemRepositoryInterface(ABC):
         ...
 
     @abstractmethod
+    def get_by_id(self, id: int) -> ItemModel:
+        ...
+
+    @abstractmethod
     def get_by_name(self, name: str) -> ItemModel:
         ...
 
