@@ -1,12 +1,5 @@
 from typing import Annotated
-from fastapi import (
-    APIRouter,
-    Depends,
-    HTTPException,
-    Path,
-    Query,
-    status
-)
+from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
 from dependency_injector.wiring import Provide, inject
 from src.application.containers.user_container import UserContainer
 from src.domain.services.user.user_service_interface import UserServiceInterface
@@ -33,7 +26,7 @@ router = APIRouter(
     response_model=UserOutSchema,
     status_code=status.HTTP_201_CREATED,
     summary="Создать пользователя",
-    description="Создает нового пользователя в системе."
+    description="Создает нового пользователя в системе.",
 )
 @inject
 def create_user(
@@ -61,7 +54,7 @@ def create_user(
     response_model=list[UserOutSchema],
     status_code=status.HTTP_200_OK,
     summary="Получить список пользователей",
-    description="Возвращает список всех пользователей с пагинацией."
+    description="Возвращает список всех пользователей с пагинацией.",
 )
 @inject
 async def get_all_users(
@@ -72,11 +65,12 @@ async def get_all_users(
     pagination: Annotated[PaginationQueryParams, Depends()],
 ) -> list[UserOutSchema]:
     """
-    Получение всех пользователей с пагинацией.
+    Получение списка пользователей с пагинацией.
 
-    - **limit**: Кол-во пользователей (по умолчанию 10)
-    - **offset**: Смещение для пагинации
+    - **pagination.limit**: Количество пользователей на странице (по умолчанию 10)
+    - **pagination.offset**: Смещение от начала списка пользователей
     """
+
     return use_case.execute(pagination.limit, pagination.offset)
 
 
@@ -84,7 +78,7 @@ async def get_all_users(
     "/{user_id}",
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Удалить пользователя",
-    description="Удаляет пользователя по его ID."
+    description="Удаляет пользователя по его ID.",
 )
 @inject
 async def delete_user(
