@@ -12,7 +12,7 @@ class UserModel(BaseModel):
     full_name: str
     password: str
     role: RoleEnum = field(default=RoleEnum.USER)
-    is_active: bool = True
+    is_active: bool = field(default=False)
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime = field(default_factory=datetime.now)
 

@@ -1,6 +1,6 @@
 import uuid
 
-from src.domain.exceptions.users import UserAlreadyExistsError
+from src.application.services.users.exceptions import UserAlreadyExistsError
 from src.domain.repositories.user_repository_intarface import UserRepositoryInterface
 from src.domain.services.user.security_intarface import PasswordHasherInterface
 from src.domain.services.user.send_email_intarface import EmailServiceInterface
