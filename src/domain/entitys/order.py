@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 
+from src.domain.entitys.base import BaseModel
 from src.domain.entitys.cart_item import CartItemModel
 
 
@@ -13,7 +14,7 @@ class OrderStatusEnum(Enum):
 
 
 @dataclass
-class OrderModel:
+class OrderModel(BaseModel):
     id: int
     user_id: int
     status: OrderStatusEnum

@@ -1,8 +1,7 @@
-from dataclasses import dataclass
-from datetime import datetime
+from enum import Enum
 
 
-@dataclass
-class RoleModel:
-    id: int
-    name: str
+class RoleEnum(str, Enum):
+    USER = "user"
+    MODERATOR = "moderator"
+    SUPERUSER = "superuser"

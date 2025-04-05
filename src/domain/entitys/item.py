@@ -1,9 +1,11 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 
+from src.domain.entitys.base import BaseModel
+
 
 @dataclass
-class ItemModel:
+class ItemModel(BaseModel):
     id: int
     user_id: int
     category_id: int

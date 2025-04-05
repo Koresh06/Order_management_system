@@ -1,34 +1,34 @@
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, model_validator
 
-from src.presentation.api.roles.schemas import RoleOutSchema
+from src.domain.entitys.role import RoleEnum
 
 
 class UserBaseSchema(BaseModel):
-    username: str
-    role_id: int
-    email: str
-    full_name: str
-    password: str
+    email: EmailStr
+    username: str = Field(..., min_length=3, max_length=50)
+    full_name: str = Field(..., min_length=3, max_length=100)
 
 
 class UserCreateSchema(UserBaseSchema):
-    pass
+    password: str = Field(..., min_length=8, max_length=100)
+    role: RoleEnum = RoleEnum.USER 
 
 
-class UserUpdateSchema(UserBaseSchema):
-    username: str | None = None
-    email: str | None = None
-    full_name: str | None = None
-    password: str | None = None
+class UserUpdateSchema(BaseModel):
+    username: str | None = Field(None, min_length=3, max_length=50)
+    email: EmailStr | None = None
+    full_name: str | None = Field(None, min_length=3, max_length=100)
+    password: str | None = Field(None, min_length=8, max_length=100)
 
 
 class UserUpdatePartialSchema(UserUpdateSchema):
-    pass
+    model_config = ConfigDict(from_attributes=True)
 
 
 class UserOutSchema(UserBaseSchema):
     id: int
+    role: RoleEnum
     created_at: datetime
     updated_at: datetime
 

@@ -1,16 +1,18 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 
-
+from src.domain.entitys.base import BaseModel
+from src.domain.entitys.role import RoleEnum
 
 @dataclass
-class UserModel:
+class UserModel(BaseModel):
     id: int
     username: str
-    role_id: int
     email: str
     full_name: str
     password: str
+    role: RoleEnum = field(default=RoleEnum.USER)
+    is_active: bool = True
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime = field(default_factory=datetime.now)
 
@@ -21,9 +23,6 @@ class UserModel:
     def change_password(self, new_password: str) -> None:
         self.password = new_password
         self.updated_at = datetime.now()
-
-    def check_role(self, role_id: int) -> bool:
-        return self.role_id == role_id
 
     def update_email(self, new_email: str) -> None:
         self.email = new_email

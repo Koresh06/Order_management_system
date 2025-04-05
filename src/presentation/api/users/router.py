@@ -1,9 +1,12 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends, HTTPException, Path, status
+from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
 from dependency_injector.wiring import Provide, inject
+from pydantic import ValidationError
 
-from src.application.containers.container import Container
-from src.application.services.users.user_service_interface import UserServiceInterface
+from src.application.containers.user_container import UserContainer
+from src.domain.services.user.user_service_interface import UserServiceInterface
+from src.domain.use_case.intarface import UseCaseOneEntity, UseCaseMultipleEntities
+from src.presentation.api.api_error_handling import ApiErrorHandling
 from src.presentation.api.users.schemas import (
     UserCreateSchema,
     UserOutSchema,
@@ -21,40 +24,42 @@ router = APIRouter(
 
 @router.post("/", response_model=UserOutSchema, status_code=status.HTTP_201_CREATED)
 @inject
-async def create_user(
+def create_user(
     user: UserCreateSchema,
-    service: Annotated[
-        UserServiceInterface,
-        Depends(Provide[Container.user_service]),
+    use_case: Annotated[
+        UseCaseOneEntity,
+        Depends(Provide[UserContainer.register_user_use_case]),
     ],
 ) -> UserOutSchema:
     try:
-        return service.create_user(user)
+        return use_case.execute(user)
     except Exception as e:
-        raise HTTPException(status_code=404, detail=str(e))
+        raise ApiErrorHandling.http_error("Error in create_user", e)
 
 
 @router.get("/", response_model=list[UserOutSchema])
 @inject
 async def get_all_users(
-    service: Annotated[
-        UserServiceInterface,
-        Depends(Provide[Container.user_service]),
+    use_case: Annotated[
+        UseCaseMultipleEntities,
+        Depends(Provide[UserContainer.get_all_users_use_case]),
     ],
+    limit: int = Query(default=10),
+    offset: int = Query(default=0),
 ) -> list[UserOutSchema]:
-    return service.get_all()
+    return use_case.execute(limit, offset)
 
 
-@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
-@inject
-async def delete_user(
-    id: Annotated[int, Path],
-    service: Annotated[
-        UserServiceInterface,
-        Depends(Provide[Container.user_service]),
-    ],
-) -> None:
-    try:
-        service.delete(id)
-    except Exception as e:
-        raise HTTPException(status_code=404, detail=str(e))
+# @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+# @inject
+# async def delete_user(
+#     id: Annotated[int, Path],
+#     service: Annotated[
+#         UserServiceInterface,
+#         Depends(Provide[Container.user_service]),
+#     ],
+# ) -> None:
+#     try:
+#         service.delete(id)
+#     except Exception as e:
+#         raise HTTPException(status_code=404, detail=str(e))

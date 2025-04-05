@@ -3,7 +3,7 @@ from dependency_injector.wiring import Provide, inject
 
 from fastapi import Path, Depends, HTTPException, status
 
-from src.application.containers.container import Container
+# from src.application.containers.container import Container
 from src.domain.entitys.user import UserModel
 
 
