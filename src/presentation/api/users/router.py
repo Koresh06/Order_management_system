@@ -97,4 +97,4 @@ async def delete_user(
     try:
         use_case.execute(user)
     except Exception as e:
-        raise HTTPException(status_code=404, detail=f"Пользователь не найден: {e}")
+        raise ApiErrorHandling.http_error("Ошибка при удалении пользователя", e)
