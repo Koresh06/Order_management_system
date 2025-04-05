@@ -34,13 +34,16 @@ class ItemService(ItemServiceInterface):
 
     def get_all(self) -> list[ItemModel]:
         return self.item_repo.get_all()
+    
+    def get_by_id(self, id: int) -> ItemModel:
+        return self.item_repo.get_by_id(id)
 
 
-    def get_all_items_by_user(self, id: int) -> GetAllByUserDTO:
-        user = self.user_repo.get_by_id(id)
+    def get_all_items_by_user(self, user_id: int) -> GetAllByUserDTO:
+        user = self.user_repo.get_by_id(user_id)
         if user is None:
             raise UserNotFoundError(f"User with ID ({id}) does not exist")
         
-        items = self.item_repo.get_items_by_user(id)
+        items = self.item_repo.get_items_by_user(user_id)
 
         return GetAllByUserDTO(user, items)

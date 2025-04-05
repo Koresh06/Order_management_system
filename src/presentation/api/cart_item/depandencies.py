@@ -5,7 +5,7 @@ from fastapi import Path, Depends, HTTPException, status
 
 from src.domain.services.cart_item.cart_item_service_intarface import CartItemServiceInterface
 from src.application.containers.cart_item_container import CartItemContainer
-from src.domain.entitys.user import UserModel
+from src.domain.entitys.cart_item import CartItemModel
 
 
 @inject
@@ -22,7 +22,7 @@ def cart_by_id(
         CartItemServiceInterface,
         Depends(Provide[CartItemContainer.cart_item_service]),
     ],
-) -> UserModel:
+) -> CartItemModel:
     """
     Зависимость для получения элемента корзины по его ID.
 

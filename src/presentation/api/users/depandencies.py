@@ -13,7 +13,7 @@ def user_by_id(
         int,
         Path(
             title="User ID",
-            description="Идентификатор для получения пользователя",
+            description="Идентификатор пользователя",
             ge=1,
         )
     ],
