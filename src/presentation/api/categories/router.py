@@ -1,17 +1,11 @@
 from typing import Annotated
-from fastapi import APIRouter, Depends, HTTPException, Path, status
+from fastapi import APIRouter, Depends, Path, status
 from dependency_injector.wiring import Provide, inject
 
-from src.domain.use_case.intarface import UseCaseOneEntity, UseCaseMultipleEntities
+from src.domain.use_case.intarface import UseCaseMultipleEntities, UseCaseOneEntity
 from src.application.containers.category_container import CategoryContainer
 from src.presentation.api.api_error_handling import ApiErrorHandling
-from src.presentation.api.categories.schemas import (
-    CategoryCreateSchema,
-    CategoryOutSchema,
-    CategoryUpdatePartialSchema,
-    CategoryUpdateSchema,
-)
-
+from src.presentation.api.categories.schemas import CategoryCreateSchema, CategoryOutSchema
 
 router = APIRouter(
     prefix="/categories",
@@ -24,6 +18,8 @@ router = APIRouter(
     "/",
     response_model=CategoryOutSchema,
     status_code=status.HTTP_201_CREATED,
+    summary="Создать категорию",
+    description="Создает новую категорию.",
 )
 @inject
 def create_category(
