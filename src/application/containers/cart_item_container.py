@@ -4,7 +4,7 @@ from src.application.services.cart_item.cart_item_service import CartItemService
 from src.infrastructure.repositories.memory.cart_item_repository_impl import CartItemRepositoryImpl
 from src.infrastructure.repositories.memory.user_repository_impl import UserRepositoryImpl
 from src.infrastructure.repositories.memory.item_repository_impl import ItemRepositoryImpl
-from src.application.use_cases.use_case_cart_item import AddCartItemUseCase, DeleteItemInCartUseCase, GetAllItemsInUserCartUseCase, UpdateItemInCartUseCase
+from src.application.use_cases.cart_item_use_case import AddCartItemUseCase, DeleteItemInCartUseCase, GetAllItemsInUserCartUseCase, UpdateItemInCartUseCase
 
 
 class CartItemContainer(containers.DeclarativeContainer):
