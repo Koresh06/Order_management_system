@@ -12,6 +12,7 @@ class ItemRepositoryImpl(ItemRepositoryInterface):
                 name="Item 1",
                 description="Description 1",
                 price=10.0,
+                image="image1.jpg",
             ),
             ItemModel(
                 id=2,
@@ -20,11 +21,12 @@ class ItemRepositoryImpl(ItemRepositoryInterface):
                 name="Item 2",
                 description="Description 2",
                 price=20.0,
+                image="image2.jpg",
             )
         ]
         self.counter = 1
 
-    def create(self, item: ItemModel) -> ItemModel:
+    def create(self, item: ItemModel, saved_path: str) -> ItemModel:
         new_item = ItemModel(
             id=self.counter,
             user_id=item.user_id,
@@ -32,6 +34,7 @@ class ItemRepositoryImpl(ItemRepositoryInterface):
             name=item.name,
             description=item.description,
             price=item.price,
+            image=saved_path,
         )
         self.items.append(new_item)
         return new_item

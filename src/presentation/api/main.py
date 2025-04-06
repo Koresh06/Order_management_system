@@ -8,7 +8,7 @@ from src.application.containers.cart_item_container import CartItemContainer
 from src.presentation.api.users.router import router as users_router
 from src.presentation.api.items.router import router as item_router
 from src.presentation.api.categories.router import router as category_router
-from src.presentation.api.cart_item.router import router as cart_router
+from src.presentation.api.cart_items.router import router as cart_router
 
 
 
@@ -23,7 +23,7 @@ def create_app() -> FastAPI:
     item_container.wire(modules=["src.presentation.api.items.router"])
 
     cart_item_container = CartItemContainer()
-    cart_item_container.wire(modules=["src.presentation.api.cart_item.router"])
+    cart_item_container.wire(modules=["src.presentation.api.cart_items.router"])
 
     app = FastAPI(
         title="API",

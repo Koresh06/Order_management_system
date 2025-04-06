@@ -1,4 +1,7 @@
 from datetime import datetime
+from decimal import Decimal
+from typing import Annotated
+from fastapi import File, Form, UploadFile
 from pydantic import BaseModel, ConfigDict  
 
 from src.presentation.api.users.schemas import UserOutSchema
@@ -9,11 +12,31 @@ class ItemBaseSchema(BaseModel):
     category_id: int
     name: str
     description: str
-    price: float
+    price: Decimal
 
 
 class ItemCreateSchema(ItemBaseSchema):
-    pass
+    image: Annotated[UploadFile, File()]
+
+    @classmethod
+    def as_form(
+        cls,
+        user_id: int = Form(...),
+        category_id: int = Form(...),
+        name: str = Form(...),
+        description: str = Form(...),
+        price: Decimal = Form(...),
+        image: UploadFile = File(...),
+    ) -> "ItemCreateSchema":
+        return cls(
+            user_id=user_id,
+            category_id=category_id,
+            name=name,
+            description=description,
+            price=price,
+            image=image,
+        )
+
 
 
 class UpdateItemSchema(ItemBaseSchema):
@@ -21,7 +44,8 @@ class UpdateItemSchema(ItemBaseSchema):
     category_id: int | None = None
     name: str | None = None
     description: str | None = None
-    price: float | None = None
+    price: Decimal | None = None
+    image: str | None = None
 
 
 class UpdatePartialItemSchema(UpdateItemSchema):
@@ -30,6 +54,7 @@ class UpdatePartialItemSchema(UpdateItemSchema):
 
 class ItemOutSchema(ItemBaseSchema):
     id: int
+    image: str
     created_at: datetime
     updated_at: datetime
 

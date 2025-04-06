@@ -25,11 +25,11 @@ router = APIRouter(
 )
 @inject
 def create_item(
-    item: ItemCreateSchema,
     use_case: Annotated[
         UseCaseOneEntity,
         Depends(Provide[ItemContainer.create_item_use_case]),
     ],
+    item: ItemCreateSchema = Depends(ItemCreateSchema.as_form),
 ) -> ItemOutSchema:
     try:
         return use_case.execute(item)

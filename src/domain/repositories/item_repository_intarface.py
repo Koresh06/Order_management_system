@@ -5,7 +5,7 @@ from src.domain.entitys.item import ItemModel
 class ItemRepositoryInterface(ABC):
 
     @abstractmethod
-    def create(self, item: ItemModel) -> ItemModel:
+    def create(self, item: ItemModel, saved_path: str) -> ItemModel:
         ...
 
     @abstractmethod

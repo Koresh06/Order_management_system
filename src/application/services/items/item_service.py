@@ -5,6 +5,7 @@ from src.domain.repositories.category_repository_intarface import CategoryReposi
 from src.domain.entitys.item import ItemModel
 from src.application.services.items.exceptions import CategoryNotFoundError, ItemAlreadyExistsError, UserNotFoundError
 from src.application.services.items.dto import GetAllByUserDTO
+from src.domain.services.item.file_intarface import FileServiceInterface
 
 
 class ItemService(ItemServiceInterface):
@@ -13,11 +14,13 @@ class ItemService(ItemServiceInterface):
         self,
         item_repo: ItemRepositoryInterface,
         user_repo: UserRepositoryInterface,
-        category_repo: CategoryRepositoryInterface
+        category_repo: CategoryRepositoryInterface,
+        file_service: FileServiceInterface,
     ):
         self.item_repo = item_repo
         self.user_repo = user_repo
         self.category_repo = category_repo
+        self.file_service = file_service
 
     def create(self, item: ItemModel) -> ItemModel:
         if self.user_repo.get_by_id(item.user_id) is None:
@@ -29,7 +32,9 @@ class ItemService(ItemServiceInterface):
         if self.item_repo.get_by_name(item.name) is not None:
             raise ItemAlreadyExistsError(f"Item ({item.name}) already exists")
         
-        return self.item_repo.create(item)
+        saved_path = self.file_service.save(item.image)
+
+        return self.item_repo.create(item, saved_path)
 
 
     def get_all(self) -> list[ItemModel]:

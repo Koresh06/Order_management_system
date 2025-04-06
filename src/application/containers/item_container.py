@@ -1,6 +1,7 @@
 from dependency_injector import containers, providers
 
 from src.application.services.items.item_service import ItemService
+from src.application.services.items.save_file import LocalSaveFileService
 from src.infrastructure.repositories.memory.item_repository_impl import ItemRepositoryImpl
 from src.infrastructure.repositories.memory.user_repository_impl import UserRepositoryImpl
 from src.infrastructure.repositories.memory.category_repository_impl import CategoryRepositoryImpl
@@ -14,11 +15,14 @@ class ItemContainer(containers.DeclarativeContainer):
     user_repo = providers.Singleton(UserRepositoryImpl)
     category_repo = providers.Singleton(CategoryRepositoryImpl)
 
+    file_service = providers.Singleton(LocalSaveFileService)
+
     item_service = providers.Singleton(
         ItemService,
         item_repo=item_repo,
         user_repo=user_repo,
-        category_repo=category_repo
+        category_repo=category_repo,
+        file_service=file_service,
     )
 
     create_item_use_case = providers.Factory(

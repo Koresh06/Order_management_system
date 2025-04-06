@@ -6,8 +6,8 @@ from src.domain.services.cart_item.cart_item_service_intarface import CartItemSe
 from src.domain.use_case.intarface import UseCaseOneEntity, UseCaseMultipleEntities
 from src.application.containers.cart_item_container import CartItemContainer
 from src.presentation.api.api_error_handling import ApiErrorHandling
-from src.presentation.api.cart_item.depandencies import cart_by_id
-from src.presentation.api.cart_item.schemas import (
+from src.presentation.api.cart_items.depandencies import cart_by_id
+from src.presentation.api.cart_items.schemas import (
     CartItemOutSchema,
     CartItemCreateSchema,
     CartItemUpdatePartialSchema,
@@ -16,7 +16,7 @@ from src.presentation.api.cart_item.schemas import (
 
 router = APIRouter(
     prefix="/cart-items",
-    tags=["Cart Items"],
+    tags=["cart items"],
     responses={404: {"description": "Not found"}},
 )
 

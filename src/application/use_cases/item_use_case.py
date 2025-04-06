@@ -5,7 +5,10 @@ from src.application.utils.error_handlers_utils import ErrorHandlingUtils
 
 
 class CreateItemUseCase:
-    def __init__(self, service: ItemServiceInterface) -> None:
+    def __init__(
+        self,
+        service: ItemServiceInterface,
+    ) -> None:
         self.service = service
 
     def execute(self, item: ItemModel) -> ItemModel:
