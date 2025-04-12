@@ -10,7 +10,7 @@ from src.domain.entitys.cart_item import CartItemModel
 
 @inject
 def cart_by_id(
-    cart_id: Annotated[
+    id: Annotated[
         int,
         Path(
             title="Cart ID",
@@ -29,6 +29,6 @@ def cart_by_id(
     Используется в эндпоинтах, где необходимо предварительно получить корзину.
     """
     try:
-        return service.get_by_cart(cart_id)
+        return service.get_by_cart(id)
     except Exception as e:
         raise HTTPException(status_code=404, detail=f"Корзина не найдена: {e}")

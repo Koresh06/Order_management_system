@@ -17,6 +17,11 @@ class CartItemRepositoryImpl(CartItemRepositoryInterface):
         self.cart_items.append(new_cart_item)
         self.counter += 1
         return new_cart_item
+    
+    def get_by_cart(self, cart_id: int) -> CartItemModel:
+        for cart_item in self.cart_items:
+            if cart_item.id == cart_id:
+                return cart_item
 
     def get_item_in_cart(self, cart_id: int, item_id: int) -> CartItemModel:
         for cart_item in self.cart_items:

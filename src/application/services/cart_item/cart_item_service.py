@@ -29,6 +29,9 @@ class CartItemService(CartItemServiceInterface):
             raise CartItemAlreadyExistsError("Cart item already exists in the cart")
 
         return self.cart_item_repo.add(cart_item)
+    
+    def get_by_cart(self, cart_id: int) -> CartItemModel:
+        return self.cart_item_repo.get_by_id(cart_id)
 
     def get_items_by_user(self, cart_id: int) -> list[CartItemModel]:
         return self.cart_item_repo.get_items_cart_user(cart_id)

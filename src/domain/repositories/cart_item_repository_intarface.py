@@ -9,6 +9,9 @@ class CartItemRepositoryInterface(ABC):
     def add(self, cart_item: CartItemModel) -> CartItemModel: ...
 
     @abstractmethod
+    def get_by_cart(self, cart_id: int) -> CartItemModel: ...
+
+    @abstractmethod
     def get_item_in_cart(self, user_id: int, item_id: int) -> CartItemModel: ...
 
     @abstractmethod
