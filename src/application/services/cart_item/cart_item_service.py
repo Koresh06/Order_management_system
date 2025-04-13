@@ -1,3 +1,5 @@
+from datetime import datetime
+from src.application.services.cart_item.calculate_total_price import CartItemPriceCalculator
 from src.application.services.cart_item.exceptions import CartItemAlreadyExistsError, ItemNotFoundError
 from src.application.services.items.exceptions import UserNotFoundError
 from src.domain.entitys.cart_item import CartItemModel, CartItemEntryModel
@@ -18,49 +20,56 @@ class CartItemService(CartItemServiceInterface):
         self.user_repo = user_repo
         self.item_repo = item_repo
 
-    def add_item(self, cart_item: CartItemModel, item_id: int, quantity: int) -> CartItemModel:
-        if self.user_repo.get_by_id(cart_item.user_id) is None:
-            raise UserNotFoundError(f"User with ID ({cart_item.user_id}) does not exist")
-        
+    def add_item(self, user_id: int, item_id: int, quantity: int) -> CartItemModel:
+        if self.user_repo.get_by_id(user_id) is None:
+            raise UserNotFoundError(f"User with ID ({user_id}) does     not exist")
+
         item = self.item_repo.get_by_id(item_id)
         if item is None:
             raise ItemNotFoundError(f"Item with ID ({item_id}) does not exist")
-        
-        cart_item_entry = CartItemEntryModel(item=item, quantity=quantity)
-        
-        if self.cart_item_repo.get_cart_by_id_user(cart_item.user_id) is None:
-            return self.cart_item_repo.create_cart_item(cart_item, cart_item_entry)
 
-        if self.cart_item_repo.get_item_in_cart(user_id=cart_item.user_id, item_id=item_id) is not None:
-            raise CartItemAlreadyExistsError("Cart item already exists in the cart")
-        else:
-            return self.cart_item_repo.add(cart_item, cart_item_entry)
-    
+        cart = self.cart_item_repo.get_cart_by_id_user(user_id)
 
-    def get_by_cart(self, cart_id: int) -> CartItemModel:
-        return self.cart_item_repo.get_by_id(cart_id)
+        cart_item_entry = CartItemEntryModel(item=item,     quantity=quantity)
+
+        if cart is None:
+            new_cart_item = CartItemModel(
+                id=0,
+                user_id=user_id,
+                items=[cart_item_entry],
+                total_price=item.price * quantity,
+            )
+            return self.cart_item_repo.create_cart_item(new_cart_item)
+
+        if self.cart_item_repo.get_item_in_cart(user_id=user_id,    item_id=item_id) is not None:
+            raise CartItemAlreadyExistsError("Cart item already exists  in the cart")
+
+        cart.total_price = CartItemPriceCalculator. calculate_total_price(cart)
+
+        return self.cart_item_repo.add(cart, cart_item_entry)
 
 
-    def get_items_by_user(self, cart_id: int) -> list[CartItemModel]:
-        return self.cart_item_repo.get_items_cart_user(cart_id)
-    
-    
-    def get_by_cart(self, cart_id: int) -> CartItemModel:
-        return self.cart_item_repo.get_by_id(cart_id)
 
+    def get_by_cart(self, user_id: int) -> CartItemModel:
+        return self.cart_item_repo.get_cart_by_id_user(user_id)
+
+    def get_items_by_user(self, user_id: int) -> list[CartItemModel]:
+        return self.cart_item_repo.get_cart_by_id_user(user_id)
 
     def update_cart_quantity(
         self,
         cart_item: CartItemModel,
         item_id: int,
-        quantity: dict,
+        quantity: int,
     ) -> CartItemModel:
-        return self.cart_item_repo.update_cart_item(
+        updated_cart = self.cart_item_repo.update_cart_item(
             cart_item=cart_item,
             item_id=item_id,
             updated_data={"quantity": quantity},
         )
-
+        updated_cart.total_price = CartItemPriceCalculator.calculate_total_price(updated_cart)
+        updated_cart.updated_at = datetime.now()
+        return updated_cart
 
     def delete_item_in_cart(self, cart_item: CartItemModel, item_id: int) -> None:
         self.cart_item_repo.delete_by_id_item(cart_item=cart_item, item_id=item_id)

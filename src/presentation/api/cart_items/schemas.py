@@ -32,6 +32,7 @@ class CartItemEntrySchema(BaseModel):
 class CartItemOutSchema(CartItemBaseSchema):
     id: int
     items: list[CartItemEntrySchema]
+    total_price: float
     created_at: datetime
     updated_at: datetime
 

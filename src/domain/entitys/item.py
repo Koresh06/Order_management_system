@@ -1,6 +1,5 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-from decimal import Decimal
 
 from src.domain.entitys.base import BaseModel
 

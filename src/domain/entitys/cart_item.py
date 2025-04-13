@@ -15,6 +15,7 @@ class CartItemEntryModel(BaseModel):
 class CartItemModel(BaseModel):
     id: int
     user_id: int
+    total_price: float
     items: list[CartItemEntryModel] = field(default_factory=list)
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime = field(default_factory=datetime.now)

@@ -24,7 +24,7 @@ class ItemRepositoryImpl(ItemRepositoryInterface):
                 image="image2.jpg",
             )
         ]
-        self.counter = 1
+        self.counter = 3
 
     def create(self, item: ItemModel, saved_path: str) -> ItemModel:
         new_item = ItemModel(

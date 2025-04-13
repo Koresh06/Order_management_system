@@ -4,7 +4,8 @@ from dependency_injector.wiring import Provide, inject
 from fastapi import Path, Depends, HTTPException
 
 from src.domain.services.cart_item.cart_item_service_intarface import CartItemServiceInterface
-from src.application.containers.cart_item_container import CartItemContainer
+# from src.application.containers.cart_item_container import CartItemContainer
+from src.application.containers.main_container import MainContainer
 from src.domain.entitys.cart_item import CartItemModel
 
 
@@ -13,18 +14,18 @@ def cart_by_id(
     id: Annotated[
         int,
         Path(
-            title="Cart ID",
-            description="Идентификатор корзины для получения",
+            title="User ID",
+            description="Идентификатор пользователя",
             ge=1,
         )
     ],
     service: Annotated[
         CartItemServiceInterface,
-        Depends(Provide[CartItemContainer.cart_item_service]),
+        Depends(Provide[MainContainer.cart_item_service]),
     ],
 ) -> CartItemModel:
     """
-    Зависимость для получения элемента корзины по его ID.
+    Зависимость для получения элемента корзины по идентификатору пользователя.
 
     Используется в эндпоинтах, где необходимо предварительно получить корзину.
     """
