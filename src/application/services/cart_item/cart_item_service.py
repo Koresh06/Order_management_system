@@ -2,6 +2,7 @@ from datetime import datetime
 from src.application.services.cart_item.calculate_total_price import CartItemPriceCalculator
 from src.application.services.cart_item.exceptions import CartItemAlreadyExistsError, ItemNotFoundError
 from src.application.services.items.exceptions import UserNotFoundError
+from src.application.services.orders.exceptions import CartItemNotFoundError
 from src.domain.entitys.cart_item import CartItemModel, CartItemEntryModel
 from src.domain.repositories.cart_item_repository_intarface import CartItemRepositoryInterface
 from src.domain.repositories.user_repository_intarface import UserRepositoryInterface
@@ -51,10 +52,11 @@ class CartItemService(CartItemServiceInterface):
             cart_entry_item=cart_item_entry,
         )
 
-    def get_by_cart(self, user_id: int) -> CartItemModel:
-        return self.cart_item_repo.get_cart_by_id_user(user_id)
 
     def get_items_by_user(self, user_id: int) -> list[CartItemModel]:
+        if self.cart_item_repo.get_cart_by_id_user(user_id) is None:
+            raise CartItemNotFoundError("Cart is empty")
+        
         return self.cart_item_repo.get_cart_by_id_user(user_id)
 
     def update_cart_quantity(

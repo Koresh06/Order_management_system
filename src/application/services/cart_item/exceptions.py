@@ -11,3 +11,7 @@ class UserNotFoundError(ApiException):
 
 class ItemNotFoundError(ApiException):
     pass
+
+
+class CartItemNotFoundError(ApiException):
+    pass
