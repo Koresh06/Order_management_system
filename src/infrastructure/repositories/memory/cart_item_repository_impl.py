@@ -57,3 +57,8 @@ class CartItemRepositoryImpl(CartItemRepositoryInterface):
                 for element in cart.items:
                     if element.item.id == item_id:
                         cart.items.remove(element)
+
+    def cancel_cart(self, user_id) -> None:
+        for cart in self.cart_items:
+            if cart.user_id == user_id:
+                self.cart_items.remove(cart)

@@ -30,6 +30,6 @@ def cart_by_id(
     Используется в эндпоинтах, где необходимо предварительно получить корзину.
     """
     try:
-        return service.get_by_cart(id)
+        return service.get_items_by_user(id)
     except Exception as e:
         raise HTTPException(status_code=404, detail=f"Корзина не найдена: {e}")

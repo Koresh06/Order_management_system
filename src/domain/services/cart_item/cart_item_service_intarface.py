@@ -9,9 +9,6 @@ class CartItemServiceInterface(ABC):
     def add_item(self, user_id: int, item_id: int, quantity: int) -> CartItemModel: ...
 
     @abstractmethod
-    def get_by_cart(self, user_id: int) -> CartItemModel: ...
-
-    @abstractmethod
     def get_items_by_user(self, user_id: int) -> list[CartItemModel]: ...
 
     @abstractmethod

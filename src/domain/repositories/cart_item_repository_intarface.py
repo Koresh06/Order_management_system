@@ -28,3 +28,7 @@ class CartItemRepositoryInterface(ABC):
 
     @abstractmethod
     def delete_by_id_item(self, cart_item: CartItemModel, item_id: int) -> None: ...
+
+
+    @abstractmethod
+    def cancel_cart(self, user_id: int) -> None: ...
