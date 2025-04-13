@@ -1,5 +1,4 @@
 from datetime import datetime
-from decimal import Decimal
 from typing import Annotated
 from fastapi import File, Form, UploadFile
 from pydantic import BaseModel, ConfigDict  
@@ -12,7 +11,7 @@ class ItemBaseSchema(BaseModel):
     category_id: int
     name: str
     description: str
-    price: Decimal
+    price: float
 
 
 class ItemCreateSchema(ItemBaseSchema):
@@ -25,7 +24,7 @@ class ItemCreateSchema(ItemBaseSchema):
         category_id: int = Form(...),
         name: str = Form(...),
         description: str = Form(...),
-        price: Decimal = Form(...),
+        price: float = Form(...),
         image: UploadFile = File(...),
     ) -> "ItemCreateSchema":
         return cls(
@@ -44,7 +43,7 @@ class UpdateItemSchema(ItemBaseSchema):
     category_id: int | None = None
     name: str | None = None
     description: str | None = None
-    price: Decimal | None = None
+    price: float | None = None
     image: str | None = None
 
 

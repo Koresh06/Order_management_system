@@ -17,8 +17,8 @@ class OrderStatusEnum(Enum):
 class OrderModel(BaseModel):
     id: int
     user_id: int
-    status: OrderStatusEnum
     total_price: float
     items: list[CartItemModel] = field(default_factory=list)
+    status: OrderStatusEnum = field(default=OrderStatusEnum.PENDING)
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime = field(default_factory=datetime.now)
