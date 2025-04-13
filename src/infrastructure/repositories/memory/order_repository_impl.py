@@ -28,3 +28,9 @@ class OrderRepositoryImpl(OrderRepositoryInterface):
         for order in self.orders:
             if order.id == order_id:
                 return order
+            
+    
+    def delete(self, order_id: int) -> None:
+        for order in self.orders:
+            if order.id == order_id:
+                self.orders.remove(order)

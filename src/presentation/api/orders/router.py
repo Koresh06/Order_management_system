@@ -3,9 +3,11 @@ from fastapi import APIRouter, Depends, status
 from dependency_injector.wiring import Provide, inject
 
 # from src.application.containers.order_container import OrderContainer
-from src.application.containers.main_container import MainContainer    
+from src.application.containers.main_container import MainContainer
+from src.domain.services.order.order_service_intarface import OrderServiceInterface
 from src.domain.use_case.intarface import UseCaseOneEntity
 from src.presentation.api.api_error_handling import ApiErrorHandling
+from src.presentation.api.orders.depandencies import order_by_id
 from src.presentation.api.orders.schemas import OrderCreateSchema, OrderOutSchema
 
 
@@ -37,3 +39,24 @@ def create_order(
         raise ApiErrorHandling.http_error("Error in create_order", e)
 
 
+@router.delete(
+    "/{order_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+    summary="Удалить заказ",
+    description="Удаляет заказ из базы данных по его ID.",
+)
+@inject
+def delete_order(
+    order: Annotated[
+        OrderServiceInterface,
+        Depends(order_by_id),
+    ],
+    use_case: Annotated[
+        UseCaseOneEntity,
+        Depends(Provide[MainContainer.canclel_order_use_case]),
+    ],
+) -> None:
+    try:
+        use_case.execute(order)
+    except Exception as e:
+        raise ApiErrorHandling.http_error("Error in delete_order", e)

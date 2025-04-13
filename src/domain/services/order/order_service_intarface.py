@@ -11,3 +11,7 @@ class OrderServiceInterface(ABC):
     @abstractmethod
     def get_by_id(self, order_id: int) -> OrderModel:
         ...
+
+    @abstractmethod
+    def delete(self, order_id: int) -> None:
+        ...

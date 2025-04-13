@@ -1,3 +1,4 @@
+from src.application.services.orders.exceptions import CartItemNotFoundError
 from src.domain.entitys.order import OrderModel
 from src.domain.repositories.cart_item_repository_intarface import CartItemRepositoryInterface
 from src.domain.repositories.order_repository_intarface import OrderRepositoryInterface
@@ -16,6 +17,9 @@ class OrderService(OrderServiceInterface):
         self.cart_item_repo = cart_item_repo
 
     def create(self, user_id: int) -> OrderModel:
+        if self.cart_item_repo.get_cart_by_id_user(user_id) is None:
+            raise CartItemNotFoundError("Cart is empty")
+        
         cart_items = self.cart_item_repo.get_cart_by_id_user(user_id)
 
         return self.order_repo.create(
@@ -26,3 +30,6 @@ class OrderService(OrderServiceInterface):
 
     def get_by_id(self, order_id: int) -> OrderModel:
         return self.order_repo.get_by_id(order_id)
+    
+    def delete(self, order_id: int) -> None:
+        return self.order_repo.delete(order_id)
