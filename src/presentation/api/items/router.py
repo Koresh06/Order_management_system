@@ -2,12 +2,13 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, status
 from dependency_injector.wiring import Provide, inject
 
+# from src.application.containers.item_container import ItemContainer
+from src.application.containers.main_container import MainContainer
 from src.domain.services.user.user_service_interface import UserServiceInterface
 from src.presentation.api.api_error_handling import ApiErrorHandling
 from src.domain.use_case.intarface import UseCaseOneEntity, UseCaseMultipleEntities
 from src.presentation.api.users.depandencies import user_by_id
 from src.presentation.api.items.schemas import ItemCreateSchema, ItemOutSchema, GetAllByUserSchema
-from src.application.containers.item_container import ItemContainer
 
 router = APIRouter(
     prefix="/items",
@@ -27,7 +28,7 @@ router = APIRouter(
 def create_item(
     use_case: Annotated[
         UseCaseOneEntity,
-        Depends(Provide[ItemContainer.create_item_use_case]),
+        Depends(Provide[MainContainer.create_item_use_case]),
     ],
     item: ItemCreateSchema = Depends(ItemCreateSchema.as_form),
 ) -> ItemOutSchema:
@@ -48,7 +49,7 @@ def create_item(
 def get_all_items(
     use_case: Annotated[
         UseCaseMultipleEntities,
-        Depends(Provide[ItemContainer.get_all_items_use_case]),
+        Depends(Provide[MainContainer.get_all_items_use_case]),
     ],
 ) -> list[ItemOutSchema]:
     try:
@@ -72,7 +73,7 @@ def get_all_items_by_user(
     ],
     use_case: Annotated[
         UseCaseOneEntity,
-        Depends(Provide[ItemContainer.get_all_items_by_user_use_case]),
+        Depends(Provide[MainContainer.get_all_items_by_user_use_case]),
     ],
 ) -> GetAllByUserSchema:
     try:

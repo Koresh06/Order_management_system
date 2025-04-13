@@ -1,7 +1,8 @@
 from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 from dependency_injector.wiring import Provide, inject
-from src.application.containers.user_container import UserContainer
+# from src.application.containers.user_container import MainContainer
+from src.application.containers.main_container import MainContainer
 from src.domain.services.user.user_service_interface import UserServiceInterface
 from src.domain.use_case.intarface import UseCaseOneEntity, UseCaseMultipleEntities
 from src.presentation.api.api_error_handling import ApiErrorHandling
@@ -31,7 +32,7 @@ def create_user(
     user: UserCreateSchema,
     use_case: Annotated[
         UseCaseOneEntity,
-        Depends(Provide[UserContainer.register_user_use_case]),
+        Depends(Provide[MainContainer.register_user_use_case]),
     ],
 ) -> UserOutSchema:
     """
@@ -58,7 +59,7 @@ def create_user(
 async def get_all_users(
     use_case: Annotated[
         UseCaseMultipleEntities,
-        Depends(Provide[UserContainer.get_all_users_use_case]),
+        Depends(Provide[MainContainer.get_all_users_use_case]),
     ],
     pagination: Annotated[PaginationQueryParams, Depends()],
 ) -> list[UserOutSchema]:
@@ -86,7 +87,7 @@ async def delete_user(
     ],
     use_case: Annotated[
         UseCaseOneEntity,
-        Depends(Provide[UserContainer.delete_user_use_case]),
+        Depends(Provide[MainContainer.delete_user_use_case]),
     ],
 ) -> None:
     """

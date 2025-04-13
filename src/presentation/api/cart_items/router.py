@@ -2,9 +2,10 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Query, status
 from dependency_injector.wiring import Provide, inject
 
+# from src.application.containers.cart_item_container import CartItemContainer
+from src.application.containers.main_container import MainContainer
 from src.domain.services.cart_item.cart_item_service_intarface import CartItemServiceInterface
 from src.domain.use_case.intarface import UseCaseOneEntity, UseCaseMultipleEntities
-from src.application.containers.cart_item_container import CartItemContainer
 from src.presentation.api.api_error_handling import ApiErrorHandling
 from src.presentation.api.cart_items.depandencies import cart_by_id
 from src.presentation.api.cart_items.schemas import (
@@ -35,7 +36,7 @@ def add_cart_item(
     quantity: Annotated[int, Query(description="Количество")],
     use_case: Annotated[
         UseCaseOneEntity,
-        Depends(Provide[CartItemContainer.add_cart_item_use_case]),
+        Depends(Provide[MainContainer.add_cart_item_use_case]),
     ],
 ) -> CartItemOutSchema:
     """
@@ -54,7 +55,7 @@ def add_cart_item(
 @router.get(
     "/",
     status_code=status.HTTP_200_OK,
-    response_model=list[CartItemOutSchema],
+    response_model=CartItemOutSchema,
     summary="Получить все товары в корзине пользователя",
     description="Возвращает список всех элементов корзины для указанного пользователя.",
 )
@@ -62,10 +63,10 @@ def add_cart_item(
 def get_all_by_cart_user(
     use_case: Annotated[
         UseCaseMultipleEntities,
-        Depends(Provide[CartItemContainer.get_all_by_cart_user]),
+        Depends(Provide[MainContainer.get_all_by_cart_user]),
     ],
     user_id: Annotated[int, Query(description="ID пользователя")],
-) -> list[CartItemOutSchema]:
+) -> CartItemOutSchema:
     """
     Получить все товары в корзине по user_id.
 
@@ -93,13 +94,13 @@ def update_cart_item(
     data: CartItemUpdatePartialSchema,
     use_case: Annotated[
         UseCaseOneEntity,
-        Depends(Provide[CartItemContainer.update_item_in_cart_use_case]),
+        Depends(Provide[MainContainer.update_item_in_cart_use_case]),
     ],
 ) -> CartItemOutSchema:
     """
     Обновить элемент корзины.
 
-    - **id**: ID элемента корзины (в path)
+    - **id**: ID пользователя (в path)
     - **item_id**: ID товара (в теле запроса)
     - **quantity**: Новое количество (в теле запроса)
     """
@@ -128,13 +129,13 @@ def delete_cart_item(
     item_id: Annotated[int, Query(description="ID удаляемого товара")],
     use_case: Annotated[
         UseCaseOneEntity,
-        Depends(Provide[CartItemContainer.delete_item_in_cart_use_case]),
+        Depends(Provide[MainContainer.delete_item_in_cart_use_case]),
     ],
 ) -> None:
     """
     Удалить товар из корзины пользователя.
 
-    - **id**: ID корзины (в path)
+    - **id**: ID пользователя (в path)
     - **item_id**: ID товара (в query)
     """
     try:

@@ -2,8 +2,9 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, status
 from dependency_injector.wiring import Provide, inject
 
+# from src.application.containers.category_container import CategoryContainer
+from src.application.containers.main_container import MainContainer
 from src.domain.use_case.intarface import UseCaseOneEntity
-from src.application.containers.category_container import CategoryContainer
 from src.presentation.api.api_error_handling import ApiErrorHandling
 from src.presentation.api.categories.schemas import CategoryCreateSchema, CategoryOutSchema
 
@@ -26,7 +27,7 @@ def create_category(
     category: CategoryCreateSchema,
     use_case: Annotated[
         UseCaseOneEntity,
-        Depends(Provide[CategoryContainer.create_category_use_case]),
+        Depends(Provide[MainContainer.create_category_use_case]),
     ],
 ) -> CategoryOutSchema:
     try:
