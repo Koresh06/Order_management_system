@@ -1,12 +1,16 @@
 from abc import ABC, abstractmethod
 
-from src.domain.entitys.cart_item import CartItemModel
+from src.domain.entitys.cart_item import CartItemEntryModel, CartItemModel
+from src.domain.entitys.item import ItemModel
 
 
 class CartItemRepositoryInterface(ABC):
 
     @abstractmethod
-    def add(self, cart_item: CartItemModel) -> CartItemModel: ...
+    def create_cart_item(self, cart_item: CartItemModel, item: CartItemEntryModel) -> CartItemModel: ...
+
+    @abstractmethod
+    def add(self, cart_item: dict, item: CartItemEntryModel) -> CartItemModel: ...
 
     @abstractmethod
     def get_by_cart(self, cart_id: int) -> CartItemModel: ...
@@ -18,7 +22,7 @@ class CartItemRepositoryInterface(ABC):
     def get_items_cart_user(self, user_id: int) -> list[CartItemModel]: ...
 
     @abstractmethod
-    def get_by_id(self, cart_id: int) -> CartItemModel: ...
+    def get_cart_by_id_user(self, user_id: int) -> CartItemModel: ...
 
     @abstractmethod
     def update_cart_item(

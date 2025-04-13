@@ -31,6 +31,8 @@ router = APIRouter(
 @inject
 def add_cart_item(
     cart_item: CartItemCreateSchema,
+    item_id: Annotated[int, Query(description="ID товара")],
+    quantity: Annotated[int, Query(description="Количество")],
     use_case: Annotated[
         UseCaseOneEntity,
         Depends(Provide[CartItemContainer.add_cart_item_use_case]),
@@ -44,7 +46,7 @@ def add_cart_item(
     - **quantity**: Количество
     """
     try:
-        return use_case.execute(cart_item)
+        return use_case.execute(cart_item=cart_item, item_id=item_id, quantity=quantity)   
     except Exception as e:
         raise ApiErrorHandling.http_error("Error in add_cart_item", e)
 

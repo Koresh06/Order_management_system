@@ -1,18 +1,18 @@
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field
 
+from src.presentation.api.items.schemas import ItemOutSchema
+
 
 class CartItemBaseSchema(BaseModel):
     user_id: int
-    item_id: int
-    quantity: int = Field(default=1, ge=1, le=100)
 
 
 class CartItemCreateSchema(CartItemBaseSchema):
     pass
 
 
-class CartItemUpdateSchema(CartItemBaseSchema):
+class CartItemUpdateSchema(BaseModel):
     user_id: int | None = None
     item_id: int | None = None
     quantity: int | None = None
@@ -24,8 +24,14 @@ class CartItemUpdatePartialSchema(BaseModel):
 
 
 
+class CartItemEntrySchema(BaseModel):
+    item: ItemOutSchema
+    quantity: int
+
+
 class CartItemOutSchema(CartItemBaseSchema):
     id: int
+    items: list[CartItemEntrySchema]
     created_at: datetime
     updated_at: datetime
 

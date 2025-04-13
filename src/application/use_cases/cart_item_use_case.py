@@ -8,9 +8,9 @@ class AddCartItemUseCase(UseCaseOneEntity):
     def __init__(self, service: CartItemServiceInterface):
         self.service = service
 
-    def execute(self, cart_item: CartItemModel) -> CartItemModel:
+    def execute(self, cart_item: CartItemModel, item_id: int, quantity: int) -> CartItemModel:
         try:
-            return self.service.add_item(cart_item)
+            return self.service.add_item(cart_item=cart_item, item_id=item_id, quantity=quantity)
         except Exception as e:
             raise ErrorHandlingUtils.application_error("Error in AddCartItemUseCase", e)
 

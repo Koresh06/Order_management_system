@@ -19,7 +19,7 @@ class ItemModel(BaseModel):
     category_id: int
     name: str
     description: str
-    price: Decimal
+    price: float
     image: FileDTO
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime = field(default_factory=datetime.now)
