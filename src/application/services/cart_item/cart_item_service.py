@@ -30,7 +30,7 @@ class CartItemService(CartItemServiceInterface):
 
         cart = self.cart_item_repo.get_cart_by_id_user(user_id)
 
-        cart_item_entry = CartItemEntryModel(item=item,     quantity=quantity)
+        cart_item_entry = CartItemEntryModel(item=item, quantity=quantity)
 
         if cart is None:
             new_cart_item = CartItemModel(
@@ -41,14 +41,15 @@ class CartItemService(CartItemServiceInterface):
             )
             return self.cart_item_repo.create_cart_item(new_cart_item)
 
-        if self.cart_item_repo.get_item_in_cart(user_id=user_id,    item_id=item_id) is not None:
+        if self.cart_item_repo.get_item_in_cart(user_id=user_id, item_id=item_id) is not None:
             raise CartItemAlreadyExistsError("Cart item already exists  in the cart")
 
-        cart.total_price = CartItemPriceCalculator. calculate_total_price(cart)
+        cart.total_price = CartItemPriceCalculator.calculate_total_price(cart)
 
-        return self.cart_item_repo.add(cart, cart_item_entry)
-
-
+        return self.cart_item_repo.add(
+            cart_item=cart,
+            cart_entry_item=cart_item_entry,
+        )
 
     def get_by_cart(self, user_id: int) -> CartItemModel:
         return self.cart_item_repo.get_cart_by_id_user(user_id)
@@ -71,5 +72,14 @@ class CartItemService(CartItemServiceInterface):
         updated_cart.updated_at = datetime.now()
         return updated_cart
 
-    def delete_item_in_cart(self, cart_item: CartItemModel, item_id: int) -> None:
-        self.cart_item_repo.delete_by_id_item(cart_item=cart_item, item_id=item_id)
+    def delete_item_in_cart(
+        self,
+        cart_item: CartItemModel,
+        item_id: int,
+    ) -> None:
+        self.cart_item_repo.delete_by_id_item(
+            cart_item=cart_item,
+            item_id=item_id,
+        )
+        cart_item.total_price = CartItemPriceCalculator.calculate_total_price(cart_item)
+        cart_item.updated_at = datetime.now()
