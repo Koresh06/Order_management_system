@@ -3,8 +3,6 @@ from src.domain.entitys.order import OrderModel
 from src.domain.repositories.cart_item_repository_intarface import CartItemRepositoryInterface
 from src.domain.repositories.order_repository_intarface import OrderRepositoryInterface
 from src.domain.services.order.order_service_intarface import OrderServiceInterface
-from src.domain.services.cart_item.cart_item_service_intarface import CartItemServiceInterface
-from src.domain.services.item.item_service_interface import ItemServiceInterface
 
 
 class OrderService(OrderServiceInterface):
@@ -36,6 +34,15 @@ class OrderService(OrderServiceInterface):
             raise OrderNotFoundError("Order not found")
         
         return self.order_repo.get_by_id(order_id)
+    
+
+    def get_all_orders_by_user(self, user_id: int) -> list[OrderModel]:
+        return self.order_repo.get_all_orders_by_user(user_id)
+    
+
+    def get_all_orders(self) -> list[OrderModel]:
+        return self.order_repo.get_all()
+    
     
     def delete(self, order_id: int) -> None:
         return self.order_repo.delete(order_id)

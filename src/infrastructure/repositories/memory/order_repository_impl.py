@@ -29,6 +29,18 @@ class OrderRepositoryImpl(OrderRepositoryInterface):
             if order.id == order_id:
                 return order
             
+
+    def get_all_orders_by_user(self, user_id: int) -> list[OrderModel]:
+        orders = []
+        for order in self.orders:
+            if order.user_id == user_id:
+                orders.append(order)
+        return orders
+    
+
+    def get_all(self) -> list[OrderModel]:
+        return self.orders
+        
     
     def delete(self, order_id: int) -> None:
         for order in self.orders:

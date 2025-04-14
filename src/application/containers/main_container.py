@@ -10,7 +10,7 @@ from src.application.services.users.user_service import UserService
 from src.application.use_cases.cart_item_use_case import AddCartItemUseCase, DeleteItemInCartUseCase, GetAllItemsInUserCartUseCase, UpdateItemInCartUseCase
 from src.application.use_cases.category_use_case import CreateCategoryUseCase
 from src.application.use_cases.item_use_case import CreateItemUseCase, GetAllItemsByUserUseCase, GetAllItemsUseCase
-from src.application.use_cases.order_use_case import CancelOrderUseCase, CreateOrderUseCase
+from src.application.use_cases.order_use_case import CancelOrderUseCase, CreateOrderUseCase, GetAllOrdersByUserUseCase, GetAllOrdersUseCase
 from src.application.use_cases.user_use_case import DeleteUserUseCase, GetAllUsersUseCase, RegisterUserUseCase
 from src.infrastructure.external_services.send_email import EmailService
 from src.infrastructure.repositories.memory.cart_item_repository_impl import CartItemRepositoryImpl
@@ -137,5 +137,15 @@ class MainContainer(containers.DeclarativeContainer):
 
     canclel_order_use_case = providers.Factory(
         CancelOrderUseCase,
+        order_service=order_service,
+    )
+
+    get_all_orders_by_user_use_case = providers.Factory(
+        GetAllOrdersByUserUseCase,
+        order_service=order_service,
+    )
+
+    get_all_orders_use_case = providers.Factory(
+        GetAllOrdersUseCase,
         order_service=order_service,
     )

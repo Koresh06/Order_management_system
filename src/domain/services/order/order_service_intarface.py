@@ -13,5 +13,13 @@ class OrderServiceInterface(ABC):
         ...
 
     @abstractmethod
+    def get_all_orders_by_user(self, user_id: int) -> list[OrderModel]:
+        ...
+
+    @abstractmethod
+    def get_all_orders(self) -> list[OrderModel]:
+        ...
+
+    @abstractmethod
     def delete(self, order_id: int) -> None:
         ...

@@ -2,7 +2,7 @@ from fastapi import Path, Depends, HTTPException, status
 from typing import Annotated
 from dependency_injector.wiring import Provide, inject
 
-from src.application.containers.user_container import UserContainer
+from src.application.containers.main_container import MainContainer
 from src.domain.services.user.user_service_interface import UserServiceInterface
 from src.domain.entitys.user import UserModel
 
@@ -19,7 +19,7 @@ def user_by_id(
     ],
     service: Annotated[
         UserServiceInterface,
-        Depends(Provide[UserContainer.user_service])
+        Depends(Provide[MainContainer.user_service])
     ],
 ) -> UserModel:
     """
